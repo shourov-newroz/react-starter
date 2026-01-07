@@ -108,7 +108,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
 
 ### Tasks
 
-- [ ] **Configure strict TypeScript in tsconfig.json**
+- [x] **Configure strict TypeScript in tsconfig.json**
 
   ```json
   {
@@ -133,7 +133,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
   - Commit configuration
   - Verify project still compiles
 
-- [ ] **Configure path aliases**
+- [x] **Configure path aliases**
 
   - Add to `tsconfig.json`:
     ```json
@@ -154,7 +154,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
     }
     ```
 
-- [ ] **Configure Vite to recognize path aliases**
+- [x] **Configure Vite to recognize path aliases**
 
   - Install `@types/node`: `npm install -D @types/node`
   - Update `vite.config.ts`:
@@ -176,13 +176,13 @@ This is a **greenfield project** to build a production-grade React frontend foun
     });
     ```
 
-- [ ] **Create global type definitions**
+- [x] **Create global type definitions**
 
   - Create `src/types/global.d.ts`
   - Create `src/types/env.d.ts` for environment variables
   - Export from `src/types/index.ts`
 
-- [ ] **Test path aliases**
+- [x] **Test path aliases**
   - Create test import using `@/` alias
   - Verify IDE autocomplete works
   - Verify build works with aliases
