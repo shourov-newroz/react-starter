@@ -57,7 +57,7 @@ export default defineConfig([
       ],
       'import/no-unresolved': 'error',
       'import/no-duplicates': 'error',
-      'import/extensions': ['error', 'always', { ts: 'never', tsx: 'never' }],
+      'import/extensions': ['error', 'ignorePackages', { ts: 'never', tsx: 'never' }],
 
       // React rules
       'react/jsx-uses-react': 'off',

@@ -762,13 +762,13 @@ This is a **greenfield project** to build a production-grade React frontend foun
 
 ### Tasks
 
-- [ ] **Install Zustand**
+- [x] **Install Zustand**
 
   ```bash
   npm install zustand
   ```
 
-- [ ] **Create store types**
+- [x] **Create store types**
   - Create `src/types/store.types.ts`:
 
     ```typescript
@@ -779,7 +779,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
     }
     ```
 
-- [ ] **Create example auth store**
+- [x] **Create example auth store**
   - Create `src/features/auth/store/auth.store.ts`:
 
     ```typescript
@@ -850,13 +850,13 @@ This is a **greenfield project** to build a production-grade React frontend foun
     };
     ```
 
-- [ ] **Create store best practices guide**
+- [x] **Create store best practices guide**
   - Document selector patterns
   - Document action patterns
   - Show examples of computed values
   - Explain state normalization
 
-- [ ] **Create custom hooks for store**
+- [x] **Create custom hooks for store**
   - Create `src/features/auth/hooks/use-auth.ts`:
 
     ```typescript
@@ -904,14 +904,14 @@ This is a **greenfield project** to build a production-grade React frontend foun
     }
     ```
 
-- [ ] **Test store**
+- [x] **Test store**
   - Create component using store
   - Verify state updates
   - Verify persistence works
   - Verify devtools integration
   - Check for unnecessary re-renders
 
-- [ ] **Document Zustand patterns**
+- [x] **Document Zustand patterns**
   - Add to README
   - Explain store structure
   - Show selector optimization
