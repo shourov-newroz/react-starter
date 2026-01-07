@@ -1,5 +1,7 @@
 import { useState, type ReactNode } from 'react';
+
 import './App.css';
+import { Button } from './components/ui/button';
 
 function App(): ReactNode {
   const [count, setCount] = useState(0);
@@ -22,6 +24,7 @@ function App(): ReactNode {
         </p>
       </div>
       <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+      <Button>test</Button>
     </>
   );
 }

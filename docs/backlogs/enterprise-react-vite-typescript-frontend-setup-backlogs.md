@@ -394,14 +394,14 @@ This is a **greenfield project** to build a production-grade React frontend foun
 
 ### Tasks
 
-- [ ] **Install Tailwind CSS**
+- [x] **Install Tailwind CSS**
 
   ```bash
   npm install -D tailwindcss postcss autoprefixer
   npx tailwindcss init -p
   ```
 
-- [ ] **Configure Tailwind in tailwind.config.js**
+- [x] **Configure Tailwind in tailwind.config.js**
 
   ```javascript
   /** @type {import('tailwindcss').Config} */
@@ -424,7 +424,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
   };
   ```
 
-- [ ] **Create global CSS file**
+- [x] **Create global CSS file**
   - Create `src/styles/index.css`:
 
     ```css
@@ -441,7 +441,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
 
   - Import in `src/app/main.tsx`
 
-- [ ] **Install shadcn/ui CLI**
+- [x] **Install shadcn/ui CLI**
 
   ```bash
   npx shadcn@latest init
@@ -452,12 +452,12 @@ This is a **greenfield project** to build a production-grade React frontend foun
   - Set up components directory: `src/components/ui`
   - Configure path aliases for components
 
-- [ ] **Update tailwind.config.js for shadcn**
+- [x] **Update tailwind.config.js for shadcn**
   - Add theme variables
   - Add CSS variable support
   - Configure dark mode (class strategy)
 
-- [ ] **Install tailwindcss-debug-screens**
+- [x] **Install tailwindcss-debug-screens**
 
   ```bash
   npm install -D tailwindcss-debug-screens
@@ -466,7 +466,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
   - Add to plugins in `tailwind.config.js` (dev only)
   - Configure to show only in development
 
-- [ ] **Add first shadcn component as example**
+- [x] **Add first shadcn component as example**
 
   ```bash
   npx shadcn@latest add button
@@ -476,7 +476,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
   - Verify styling works
   - Verify dark mode toggle works
 
-- [ ] **Create design token documentation**
+- [x] **Create design token documentation**
   - Document color palette
   - Document spacing scale
   - Document typography system
