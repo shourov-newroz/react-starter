@@ -497,13 +497,13 @@ This is a **greenfield project** to build a production-grade React frontend foun
 
 ### Tasks
 
-- [ ] **Install Zod**
+- [x] **Install Zod**
 
   ```bash
   npm install zod
   ```
 
-- [ ] **Create .env.example**
+- [x] **Create .env.example**
 
   ```bash
   # API Configuration
@@ -518,7 +518,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
   VITE_APP_ENV=development
   ```
 
-- [ ] **Create environment schema**
+- [x] **Create environment schema**
   - Create `src/config/env.ts`:
 
     ```typescript
@@ -548,7 +548,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
     export const env = validateEnv();
     ```
 
-- [ ] **Create config module**
+- [x] **Create config module**
   - Create `src/config/index.ts`:
 
     ```typescript
@@ -571,7 +571,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
     export { env };
     ```
 
-- [ ] **Create .env for local development**
+- [x] **Create .env for local development**
   - Copy from `.env.example`
   - Add to `.gitignore`
   - Set appropriate local values
