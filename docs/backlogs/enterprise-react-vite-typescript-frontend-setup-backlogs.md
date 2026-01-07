@@ -47,20 +47,17 @@ This is a **greenfield project** to build a production-grade React frontend foun
 ### Tasks
 
 - [x] **Initialize Vite project with React + TypeScript template**
-
   - Run: `npm create vite@latest . -- --template react-ts`
   - Verify Node.js LTS version (18.x or 20.x)
   - Commit initial scaffold
 
 - [x] **Configure package.json with project metadata**
-
   - Set project name, version, description
   - Add `"type": "module"` for ES modules
   - Set `"private": true`
   - Add author and license information
 
 - [x] **Update to latest stable dependencies**
-
   - Update React to latest stable (19.2.x)
   - Update Vite to latest stable (7.x)
   - Update TypeScript to latest stable (5.x)
@@ -134,7 +131,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
   - Verify project still compiles
 
 - [x] **Configure path aliases**
-
   - Add to `tsconfig.json`:
     ```json
     "baseUrl": ".",
@@ -155,7 +151,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [x] **Configure Vite to recognize path aliases**
-
   - Install `@types/node`: `npm install -D @types/node`
   - Update `vite.config.ts`:
 
@@ -177,7 +172,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [x] **Create global type definitions**
-
   - Create `src/types/global.d.ts`
   - Create `src/types/env.d.ts` for environment variables
   - Export from `src/types/index.ts`
@@ -202,7 +196,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
 
 ### Tasks
 
-- [ ] **Install ESLint dependencies**
+- [x] **Install ESLint dependencies**
 
   ```bash
   npm install -D eslint @eslint/js @types/eslint__js typescript-eslint
@@ -211,8 +205,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
   npm install -D eslint-plugin-import
   ```
 
-- [ ] **Create eslint.config.js (flat config)**
-
+- [x] **Create eslint.config.js (flat config)**
   - Use new ESLint flat config format
   - Enable TypeScript strict rules
   - Enable React and React Hooks rules
@@ -225,13 +218,13 @@ This is a **greenfield project** to build a production-grade React frontend foun
     - No console.log in production
     - Enforce explicit function return types for exported functions
 
-- [ ] **Install Prettier**
+- [x] **Install Prettier**
 
   ```bash
   npm install -D prettier eslint-config-prettier eslint-plugin-prettier
   ```
 
-- [ ] **Create .prettierrc.json**
+- [x] **Create .prettierrc.json**
 
   ```json
   {
@@ -246,14 +239,13 @@ This is a **greenfield project** to build a production-grade React frontend foun
   }
   ```
 
-- [ ] **Create .prettierignore**
-
+- [x] **Create .prettierignore**
   - Add build directories
   - Add node_modules
   - Add coverage reports
   - Add .env files
 
-- [ ] **Add lint and format scripts to package.json**
+- [x] **Add lint and format scripts to package.json**
 
   ```json
   {
@@ -266,14 +258,13 @@ This is a **greenfield project** to build a production-grade React frontend foun
   }
   ```
 
-- [ ] **Run and fix initial linting errors**
-
+- [x] **Run and fix initial linting errors**
   - Run `npm run lint`
   - Fix all errors and warnings
   - Run `npm run format`
   - Commit clean codebase
 
-- [ ] **Configure VS Code settings (optional)**
+- [x] **Configure VS Code settings (optional)**
   - Create `.vscode/settings.json`
   - Enable format on save
   - Set Prettier as default formatter
@@ -294,20 +285,20 @@ This is a **greenfield project** to build a production-grade React frontend foun
 
 ### Tasks
 
-- [ ] **Install Husky**
+- [x] **Install Husky**
 
   ```bash
   npm install -D husky
   npx husky init
   ```
 
-- [ ] **Install lint-staged**
+- [x] **Install lint-staged**
 
   ```bash
   npm install -D lint-staged
   ```
 
-- [ ] **Configure lint-staged in package.json**
+- [x] **Configure lint-staged in package.json**
 
   ```json
   {
@@ -318,8 +309,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
   }
   ```
 
-- [ ] **Create pre-commit hook**
-
+- [x] **Create pre-commit hook**
   - Edit `.husky/pre-commit`:
 
     ```bash
@@ -331,13 +321,13 @@ This is a **greenfield project** to build a production-grade React frontend foun
 
   - Make executable: `chmod +x .husky/pre-commit`
 
-- [ ] **Install commitlint**
+- [x] **Install commitlint**
 
   ```bash
   npm install -D @commitlint/cli @commitlint/config-conventional
   ```
 
-- [ ] **Create commitlint.config.js**
+- [x] **Create commitlint.config.js**
 
   ```javascript
   export default {
@@ -364,8 +354,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
   };
   ```
 
-- [ ] **Create commit-msg hook**
-
+- [x] **Create commit-msg hook**
   - Edit `.husky/commit-msg`:
 
     ```bash
@@ -377,14 +366,13 @@ This is a **greenfield project** to build a production-grade React frontend foun
 
   - Make executable: `chmod +x .husky/commit-msg`
 
-- [ ] **Test hooks**
-
+- [x] **Test hooks**
   - Make a small change
   - Try committing with bad message → should fail
   - Try committing with bad code → should fail
   - Commit with proper format → should succeed
 
-- [ ] **Document commit conventions**
+- [x] **Document commit conventions**
   - Add section to README about commit message format
   - Provide examples:
     - `feat: add user authentication`
@@ -437,7 +425,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
   ```
 
 - [ ] **Create global CSS file**
-
   - Create `src/styles/index.css`:
 
     ```css
@@ -466,7 +453,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
   - Configure path aliases for components
 
 - [ ] **Update tailwind.config.js for shadcn**
-
   - Add theme variables
   - Add CSS variable support
   - Configure dark mode (class strategy)
@@ -533,7 +519,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
   ```
 
 - [ ] **Create environment schema**
-
   - Create `src/config/env.ts`:
 
     ```typescript
@@ -564,7 +549,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create config module**
-
   - Create `src/config/index.ts`:
 
     ```typescript
@@ -588,13 +572,11 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create .env for local development**
-
   - Copy from `.env.example`
   - Add to `.gitignore`
   - Set appropriate local values
 
 - [ ] **Test environment validation**
-
   - Remove required env var → should throw error
   - Set invalid value → should throw error
   - Import config in component → should have full type support
@@ -628,7 +610,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
   ```
 
 - [ ] **Create API error types**
-
   - Create `src/types/api.types.ts`:
 
     ```typescript
@@ -647,7 +628,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create Axios instance**
-
   - Create `src/services/axios.ts`:
 
     ```typescript
@@ -699,7 +679,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create API client wrapper**
-
   - Create `src/services/api-client.ts`:
 
     ```typescript
@@ -707,8 +686,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
     import type { ApiResponse } from '@/types/api.types';
 
     export const apiClient = {
-      get: <T>(url: string, config = {}) =>
-        axiosInstance.get<ApiResponse<T>>(url, config),
+      get: <T>(url: string, config = {}) => axiosInstance.get<ApiResponse<T>>(url, config),
 
       post: <T>(url: string, data?: unknown, config = {}) =>
         axiosInstance.post<ApiResponse<T>>(url, data, config),
@@ -719,13 +697,11 @@ This is a **greenfield project** to build a production-grade React frontend foun
       patch: <T>(url: string, data?: unknown, config = {}) =>
         axiosInstance.patch<ApiResponse<T>>(url, data, config),
 
-      delete: <T>(url: string, config = {}) =>
-        axiosInstance.delete<ApiResponse<T>>(url, config),
+      delete: <T>(url: string, config = {}) => axiosInstance.delete<ApiResponse<T>>(url, config),
     };
     ```
 
 - [ ] **Configure SWR globally**
-
   - Create `src/lib/swr-config.ts`:
 
     ```typescript
@@ -748,7 +724,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Add SWRConfig to providers**
-
   - Update `src/app/providers.tsx`:
 
     ```typescript
@@ -761,7 +736,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create example API service**
-
   - Create `src/services/example.service.ts` with typed methods
   - Show proper typing with generics
   - Document usage pattern
@@ -795,7 +769,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
   ```
 
 - [ ] **Create store types**
-
   - Create `src/types/store.types.ts`:
 
     ```typescript
@@ -807,7 +780,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create example auth store**
-
   - Create `src/features/auth/store/auth.store.ts`:
 
     ```typescript
@@ -847,8 +819,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
           (set) => ({
             ...initialState,
 
-            setUser: (user) =>
-              set({ user, isAuthenticated: true, error: null }),
+            setUser: (user) => set({ user, isAuthenticated: true, error: null }),
 
             clearUser: () => set({ user: null, isAuthenticated: false }),
 
@@ -880,14 +851,12 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create store best practices guide**
-
   - Document selector patterns
   - Document action patterns
   - Show examples of computed values
   - Explain state normalization
 
 - [ ] **Create custom hooks for store**
-
   - Create `src/features/auth/hooks/use-auth.ts`:
 
     ```typescript
@@ -936,7 +905,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Test store**
-
   - Create component using store
   - Verify state updates
   - Verify persistence works
@@ -989,7 +957,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
   ```
 
 - [ ] **Create auth types**
-
   - Create `src/features/auth/auth.types.ts`:
 
     ```typescript
@@ -1012,7 +979,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create auth service**
-
   - Create `src/features/auth/services/auth.service.ts`:
 
     ```typescript
@@ -1021,10 +987,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
 
     export const authService = {
       login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
-        const response = await apiClient.post<AuthResponse>(
-          '/auth/login',
-          credentials
-        );
+        const response = await apiClient.post<AuthResponse>('/auth/login', credentials);
         return response.data.data;
       },
 
@@ -1040,7 +1003,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create LoginForm component**
-
   - Create `src/features/auth/components/LoginForm.tsx`
   - Use shadcn/ui Button and Input
   - Integrate with auth hook
@@ -1048,7 +1010,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
   - Add loading and error states
 
 - [ ] **Create barrel exports**
-
   - Export from each subdirectory index.ts
   - Export from feature root index.ts
   - Ensure clean public API
@@ -1086,7 +1047,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
   ```
 
 - [ ] **Configure Vitest**
-
   - Create `vitest.config.ts`:
 
     ```typescript
@@ -1128,7 +1088,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create test setup file**
-
   - Create `src/tests/setup.ts`:
 
     ```typescript
@@ -1147,7 +1106,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Set up MSW**
-
   - Create `src/tests/mocks/handlers.ts`:
 
     ```typescript
@@ -1182,7 +1140,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create test utilities**
-
   - Create `src/tests/test-utils.tsx`:
 
     ```typescript
@@ -1220,7 +1177,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Write example component test**
-
   - Create `src/features/auth/components/LoginForm.test.tsx`:
 
     ```typescript
@@ -1252,7 +1208,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Write example store test**
-
   - Create `src/features/auth/store/auth.store.test.ts`:
 
     ```typescript
@@ -1316,7 +1271,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
 ### Tasks
 
 - [ ] **Create error types**
-
   - Create `src/types/error.types.ts`:
 
     ```typescript
@@ -1339,7 +1293,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create error utility**
-
   - Create `src/lib/error.ts`:
 
     ```typescript
@@ -1403,7 +1356,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create logger utility**
-
   - Create `src/lib/logger.ts`:
 
     ```typescript
@@ -1472,7 +1424,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create ErrorBoundary component**
-
   - Create `src/components/ErrorBoundary.tsx`:
 
     ```typescript
@@ -1533,18 +1484,15 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Add ErrorBoundary to app**
-
   - Wrap app in ErrorBoundary in `src/app/App.tsx`
   - Add feature-level error boundaries where needed
 
 - [ ] **Create monitoring integration stubs**
-
   - Create `src/lib/monitoring/sentry.ts` (stub)
   - Create `src/lib/monitoring/opentelemetry.ts` (stub)
   - Document how to integrate when ready
 
 - [ ] **Update Axios interceptor to use logger**
-
   - Log all API errors
   - Add request tracing
   - Log performance metrics
@@ -1577,7 +1525,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
   ```
 
 - [ ] **Create providers file**
-
   - Create `src/app/providers.tsx`:
 
     ```typescript
@@ -1603,7 +1550,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create App.tsx**
-
   - Create `src/app/App.tsx`:
 
     ```typescript
@@ -1632,7 +1578,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Update main.tsx**
-
   - Create `src/app/main.tsx`:
 
     ```typescript
@@ -1655,7 +1600,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Update index.html**
-
   - Set proper title and meta tags
   - Add favicon
   - Add viewport meta
@@ -1683,7 +1627,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
 ### Tasks
 
 - [ ] **Implement route-based code splitting**
-
   - Update `src/app/App.tsx` to use React.lazy:
 
     ```typescript
@@ -1706,13 +1649,11 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create loading component**
-
   - Create `src/components/Loading.tsx`
   - Use as Suspense fallback
   - Match app design system
 
 - [ ] **Configure Vite for optimal builds**
-
   - Update `vite.config.ts`:
     ```typescript
     export default defineConfig({
@@ -1732,7 +1673,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
     ```
 
 - [ ] **Create memoization examples**
-
   - Document useMemo usage
   - Document useCallback usage
   - Show Zustand selector optimization
@@ -1770,7 +1710,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
 ### Tasks
 
 - [ ] **Create comprehensive README.md**
-
   - Project overview
   - Tech stack list
   - Getting started guide
@@ -1784,7 +1723,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
   - Troubleshooting section
 
 - [ ] **Create ARCHITECTURE.md**
-
   - Detailed architecture explanation
   - Folder structure deep dive
   - State management architecture
@@ -1794,7 +1732,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
   - Performance considerations
 
 - [ ] **Create CONTRIBUTING.md**
-
   - Code style guide
   - Commit message conventions
   - Pull request process
