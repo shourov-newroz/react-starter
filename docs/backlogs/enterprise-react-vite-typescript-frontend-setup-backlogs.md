@@ -603,13 +603,13 @@ This is a **greenfield project** to build a production-grade React frontend foun
 
 ### Tasks
 
-- [ ] **Install Axios and SWR**
+- [x] **Install Axios and SWR**
 
   ```bash
   npm install axios swr
   ```
 
-- [ ] **Create API error types**
+- [x] **Create API error types**
   - Create `src/types/api.types.ts`:
 
     ```typescript
@@ -627,7 +627,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
     }
     ```
 
-- [ ] **Create Axios instance**
+- [x] **Create Axios instance**
   - Create `src/services/axios.ts`:
 
     ```typescript
@@ -678,7 +678,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
     export default axiosInstance;
     ```
 
-- [ ] **Create API client wrapper**
+- [x] **Create API client wrapper**
   - Create `src/services/api-client.ts`:
 
     ```typescript
@@ -701,7 +701,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
     };
     ```
 
-- [ ] **Configure SWR globally**
+- [x] **Configure SWR globally**
   - Create `src/lib/swr-config.ts`:
 
     ```typescript
@@ -723,7 +723,7 @@ This is a **greenfield project** to build a production-grade React frontend foun
     };
     ```
 
-- [ ] **Add SWRConfig to providers**
+- [x] **Add SWRConfig to providers**
   - Update `src/app/providers.tsx`:
 
     ```typescript
@@ -735,12 +735,12 @@ This is a **greenfield project** to build a production-grade React frontend foun
     }
     ```
 
-- [ ] **Create example API service**
+- [x] **Create example API service**
   - Create `src/services/example.service.ts` with typed methods
   - Show proper typing with generics
   - Document usage pattern
 
-- [ ] **Test API setup**
+- [x] **Test API setup**
   - Create test component that fetches data with SWR
   - Verify error handling
   - Verify request interceptors
