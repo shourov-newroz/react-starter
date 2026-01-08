@@ -18,5 +18,6 @@ export default {
         'build',
       ],
     ],
+    'body-max-line-length': [0],
   },
 };

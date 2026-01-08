@@ -1,73 +1,307 @@
-# React + TypeScript + Vite
+# Enterprise React + Vite + TypeScript Frontend Starter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A production-grade React frontend foundation from scratch with enterprise-ready architecture, strict quality gates, and modular scalability.
 
-Currently, two official plugins are available:
+## 🚀 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** - Latest React with concurrent features
+- **Vite 7** - Fast build tool and dev server
+- **TypeScript 5** - Strict type safety
+- **Tailwind CSS 4** - Utility-first CSS with shadcn/ui
+- **Zustand 5** - Lightweight state management
+- **SWR 2** - Data fetching and caching
+- **Axios** - HTTP client with interceptors
+- **Vitest** - Fast unit testing
+- **Testing Library** - Component testing
+- **MSW** - API mocking
+- **React Router 7** - Client-side routing
+- **Zod** - Environment validation
+- **ESLint + Prettier** - Code quality and formatting
+- **Husky + lint-staged** - Git hooks
+- **commitlint** - Conventional commits
 
-## React Compiler
+## 📦 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Architecture
 
-## Expanding the ESLint configuration
+- Feature-based modular architecture
+- Clean separation of concerns
+- Path aliases for clean imports
+- Strict TypeScript configuration
+- Environment validation with Zod
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Data Layer
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Centralized Axios instance with interceptors
+- Request/response logging and error handling
+- SWR global configuration for data fetching
+- Typed API responses
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### State Management
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Zustand stores with persistence
+- Typed selectors for optimal performance
+- Feature-scoped store architecture
+- DevTools integration
+
+### UI/UX
+
+- Tailwind CSS with design tokens
+- shadcn/ui component library
+- Dark mode support
+- Responsive design
+- Loading states and error boundaries
+
+### Testing
+
+- Vitest with coverage thresholds
+- Testing Library for components
+- MSW for API mocking
+- Test utilities and helpers
+
+### Quality Assurance
+
+- Strict ESLint rules
+- Prettier formatting
+- Husky pre-commit hooks
+- Conventional commit messages
+
+### Performance
+
+- Route-based code splitting
+- Lazy loading with Suspense
+- Bundle analyzer
+- Vendor chunk optimization
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- Node.js 18.x or 20.x (LTS)
+- npm 10.x or later
+
+### Installation
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd react-starter
+
+# Install dependencies
+npm install
+
+# Copy environment file
+cp .env.example .env
+
+# Start development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Available Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Command                 | Description               |
+| ----------------------- | ------------------------- |
+| `npm run dev`           | Start development server  |
+| `npm run build`         | Build for production      |
+| `npm run lint`          | Run ESLint                |
+| `npm run lint:fix`      | Fix ESLint errors         |
+| `npm run format`        | Format code with Prettier |
+| `npm run format:check`  | Check formatting          |
+| `npm run test`          | Run tests with UI         |
+| `npm run test:run`      | Run tests in CI mode      |
+| `npm run test:coverage` | Run tests with coverage   |
+| `npm run preview`       | Preview production build  |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📁 Project Structure
+
 ```
+src/
+├── app/                    # Application entry point
+│   ├── App.tsx            # Root component with routing
+│   ├── providers.tsx      # Context providers
+│   └── main.tsx           # Entry point
+├── assets/                # Static assets
+├── components/            # Shared components
+│   ├── ui/               # shadcn/ui components
+│   └── ErrorBoundary.tsx # Error boundary
+├── config/                # Configuration
+│   ├── env.ts            # Environment validation
+│   └── index.ts          # Config exports
+├── features/              # Feature modules
+│   └── auth/             # Auth feature example
+│       ├── components/   # Feature components
+│       ├── hooks/        # Feature hooks
+│       ├── pages/        # Feature pages
+│       ├── services/     # API services
+│       ├── store/        # Zustand store
+│       └── auth.types.ts # Feature types
+├── hooks/                 # Shared hooks
+├── lib/                   # Utilities
+│   ├── error.ts          # Error handling
+│   ├── logger.ts         # Logging utility
+│   ├── swr-config.ts     # SWR configuration
+│   └── utils.ts          # Helper functions
+├── services/              # API services
+│   ├── axios.ts          # Axios instance
+│   └── api-client.ts     # API client wrapper
+├── stores/                # Global stores
+├── styles/                # Global styles
+│   └── index.css         # Tailwind imports
+├── tests/                 # Test setup
+│   ├── mocks/            # MSW handlers
+│   ├── setup.ts          # Test setup
+│   └── test-utils.tsx    # Test utilities
+└── types/                 # TypeScript types
+    ├── api.types.ts      # API types
+    ├── error.types.ts    # Error types
+    └── global.d.ts       # Global declarations
+```
+
+## 🔧 Configuration
+
+### TypeScript
+
+The project uses strict TypeScript configuration with the following settings:
+
+- `strict: true` - Enable all strict type checking options
+- `noImplicitAny: true` - Disallow implicit `any` types
+- `strictNullChecks: true` - Enable strict null checks
+- `noUnusedLocals: true` - Report unused local variables
+- `noUnusedParameters: true` - Report unused parameters
+
+### Path Aliases
+
+The project uses path aliases for clean imports:
+
+| Alias          | Path              |
+| -------------- | ----------------- |
+| `@`            | `src/`            |
+| `@/app`        | `src/app/`        |
+| `@/features`   | `src/features/`   |
+| `@/components` | `src/components/` |
+| `@/hooks`      | `src/hooks/`      |
+| `@/services`   | `src/services/`   |
+| `@/stores`     | `src/stores/`     |
+| `@/lib`        | `src/lib/`        |
+| `@/styles`     | `src/styles/`     |
+| `@/types`      | `src/types/`      |
+| `@/config`     | `src/config/`     |
+| `@/tests`      | `src/tests/`      |
+
+### Environment Variables
+
+Required environment variables are validated at runtime using Zod:
+
+```typescript
+// .env.example
+VITE_API_BASE_URL=http://localhost:3000/api
+VITE_API_TIMEOUT=30000
+VITE_ENABLE_ANALYTICS=false
+VITE_ENABLE_SENTRY=false
+VITE_APP_ENV=development
+```
+
+## 📚 Documentation
+
+- [Architecture](docs/ARCHITECTURE.md) - Detailed architecture documentation
+- [Testing](docs/TESTING.md) - Testing guide and patterns
+- [Contributing](docs/CONTRIBUTING.md) - Contribution guidelines
+
+## 🔒 Commit Conventions
+
+This project follows [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+### Types
+
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation only changes
+- `style`: Changes that do not affect the meaning of the code (white-space, formatting, etc)
+- `refactor`: A code change that neither fixes a bug nor adds a feature
+- `perf`: A code change that improves performance
+- `test`: Adding missing tests or correcting existing tests
+- `chore`: Changes to the build process or auxiliary tools
+- `revert`: Reverts a previous commit
+- `ci`: Changes to CI configuration
+- `build`: Changes that affect the build system
+
+## 🧪 Testing
+
+### Writing Tests
+
+```typescript
+// Example component test
+import { render, screen } from '@/tests/test-utils';
+import { LoginForm } from './LoginForm';
+
+describe('LoginForm', () => {
+  it('renders login form', () => {
+    render(<LoginForm />);
+    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+  });
+});
+```
+
+### Running Tests
+
+```bash
+# Run tests with UI
+npm run test:ui
+
+# Run tests in CI mode
+npm run test:run
+
+# Run with coverage
+npm run test:coverage
+```
+
+## 📈 Performance
+
+### Bundle Analysis
+
+Generate a bundle report to analyze chunk sizes:
+
+```bash
+npm run build
+# Open dist/bundle-report.html
+```
+
+### Code Splitting
+
+Routes are automatically code-split using React.lazy:
+
+```typescript
+const LoginPage = lazy(() =>
+  import('@/features/auth/pages/LoginPage').then((module) => ({
+    default: module.LoginPage,
+  }))
+);
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feat/my-feature`
+3. Commit your changes: `git commit -am 'feat: add my feature'`
+4. Push to the branch: `git push origin feat/my-feature`
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Vite](https://vitejs.dev/) - Next generation frontend tooling
+- [React](https://react.dev/) - The library for web and native user interfaces
+- [shadcn/ui](https://ui.shadcn.com/) - Beautifully designed components
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Zustand](https://github.com/pmndrs/zustand) - Bear necessities for state management

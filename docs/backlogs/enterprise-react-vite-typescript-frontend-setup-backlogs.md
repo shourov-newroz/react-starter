@@ -576,12 +576,12 @@ This is a **greenfield project** to build a production-grade React frontend foun
   - Add to `.gitignore`
   - Set appropriate local values
 
-- [ ] **Test environment validation**
+- [x] **Test environment validation**
   - Remove required env var → should throw error
   - Set invalid value → should throw error
   - Import config in component → should have full type support
 
-- [ ] **Document environment setup**
+- [x] **Document environment setup**
   - Add to README
   - List all required variables
   - Explain validation behavior
@@ -1266,7 +1266,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
 - Error boundaries implemented
 - Centralized logging utility
 - Error normalization working
-- Ready for Sentry/monitoring integration
 
 ### Tasks
 
@@ -1486,11 +1485,6 @@ This is a **greenfield project** to build a production-grade React frontend foun
 - [ ] **Add ErrorBoundary to app**
   - Wrap app in ErrorBoundary in `src/app/App.tsx`
   - Add feature-level error boundaries where needed
-
-- [ ] **Create monitoring integration stubs**
-  - Create `src/lib/monitoring/sentry.ts` (stub)
-  - Create `src/lib/monitoring/opentelemetry.ts` (stub)
-  - Document how to integrate when ready
 
 - [ ] **Update Axios interceptor to use logger**
   - Log all API errors
