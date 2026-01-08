@@ -1,4 +1,25 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx lint-staged
+# Exit on error
+set -e
+
+echo "Running pre-commit checks..."
+
+# 1. Run TypeScript type checking
+echo "Checking TypeScript types..."
+npx tsc --noEmit
+
+# 2. Run linting (fail on errors only, not warnings)
+echo "Running linter..."
+npx eslint . --ext ts,tsx
+
+# 3. Check formatting
+echo "Checking code formatting..."
+npx prettier --check "src/**/*.{ts,tsx,json,css,md}"
+
+# 4. Run tests
+echo "Running tests..."
+npx vitest run
+
+echo "All pre-commit checks passed!"
