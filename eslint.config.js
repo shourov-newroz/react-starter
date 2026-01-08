@@ -14,6 +14,7 @@ export default defineConfig([
   globalIgnores(['dist', 'node_modules', 'coverage']),
   {
     files: ['**/*.{ts,tsx}'],
+    ignores: ['**/vitest.config.ts'],
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
@@ -80,7 +81,12 @@ export default defineConfig([
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       '@typescript-eslint/explicit-function-return-type': [
         'error',
-        { allowExpressions: true, allowTypedFunctionExpressions: true },
+        {
+          allowExpressions: true,
+          allowTypedFunctionExpressions: true,
+          allowHigherOrderFunctions: true,
+          allowDirectConstAssertionInArrowFunctions: true,
+        },
       ],
 
       // Prettier
