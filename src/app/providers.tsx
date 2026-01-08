@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { SWRConfig } from 'swr';
 
@@ -9,7 +9,7 @@ interface ProvidersProps {
   children: ReactNode;
 }
 
-export function Providers({ children }: ProvidersProps): ReactNode {
+export function Providers({ children }: ProvidersProps): React.ReactElement {
   return (
     <ErrorBoundary>
       <SWRConfig value={swrConfig}>
