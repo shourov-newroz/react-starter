@@ -1,5 +1,7 @@
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
+
+import routes from '@/config/routes';
 
 import { Providers } from './providers';
 
@@ -10,16 +12,6 @@ const Loading = (): React.ReactElement => (
       <p className="text-muted-foreground">Loading...</p>
     </div>
   </div>
-);
-
-const LoginPage = lazy(() =>
-  import('@/features/auth/pages/LoginPage').then((module) => ({ default: module.LoginPage }))
-);
-
-const ErrorHandlingDemo = lazy(() =>
-  import('@/features/demo/pages/ErrorHandlingDemo').then((module) => ({
-    default: module.ErrorHandlingDemo,
-  }))
 );
 
 function HomePage(): React.ReactElement {
@@ -60,10 +52,9 @@ function AppRoutes(): React.ReactNode {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/error-demo" element={<ErrorHandlingDemo />} />
-        <Route path="*" element={<NotFoundPage />} />
+        {routes.map(({ path, component: Component }) => (
+          <Route key={path} path={path} element={<Component />} />
+        ))}
       </Routes>
     </Suspense>
   );
@@ -78,3 +69,4 @@ function App(): React.ReactNode {
 }
 
 export default App;
+export { HomePage, NotFoundPage };

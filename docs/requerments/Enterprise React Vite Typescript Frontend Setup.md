@@ -1,367 +1,162 @@
-**Act as a Principal Frontend Architect, DX Lead, and Platform Engineer.**
+# 📘 STORY REQUIREMENT DOCUMENT (SRD)
 
-Your task is to **design and generate a comprehensive, enterprise-ready frontend project setup** using **React.js, Vite, and TypeScript**, enforcing **strict best practices, modular architecture, and automated quality gates**.
+### 🏷️ Requirement ID:
 
-This is a **fresh project**, not a refactor.
+SRD-2026-001
 
----
+### 🎯 Story Title:
 
-## 🎯 OBJECTIVE
-
-Create a **production-grade React frontend foundation** that:
-
-- Uses **latest stable versions**
-
-- Enforces **strict TypeScript and linting**
-
-- Uses **Zustand for client state**
-
-- Uses **SWR + Axios with global configuration**
-
-- Uses **Tailwind CSS + shadcn/ui**
-
-- Supports **feature-based modular scaling**
-
-- Includes **testing, observability, and CI readiness**
-
-- Provides **high developer confidence**
+Implement Scalable Routing and Linking with Private and Public Route Management
 
 ---
 
-## 🧱 CORE STACK (MANDATORY)
+## 🧩 1. Story Background / Context
 
-### Framework & Tooling
-
-- **React.js (latest stable)**
-
-- **Vite (latest stable)**
-
-- **TypeScript (strict: true)**
-
-- **Node.js LTS**
+The current project lacks a structured and scalable routing system. As the application grows, managing routes, links, and access control (private vs. public routes) becomes increasingly complex. This story aims to implement a modular, scalable, and maintainable routing solution that adheres to best practices, ensuring seamless navigation and access control across the application.
 
 ---
 
-## 🧠 STATE & DATA LAYER
+## 🧠 2. Codebase Analysis Summary
 
-### Client State Management
+- 🔍 **Files / Modules Involved:**
+  - `src/app/App.tsx`
+  - `src/features/auth/`
+  - `src/config/`
+  - `src/lib/`
+  - `src/services/`
+  - `src/types/`
 
-- **Zustand**
+- 🧩 **Existing Implementation Observations:**
+  - The project currently uses a basic routing setup in `App.tsx`.
+  - Authentication logic is present in `src/features/auth/` but not integrated with routing.
+  - No clear separation between public and private routes.
+  - No centralized configuration for routes or links.
 
-- Feature-scoped stores
-
-- Fully typed selectors
-
-- No monolithic global store
-
-- No mutable state
-
-- Store logic isolated per domain
-
-### Server State & Data Fetching
-
-- **SWR**
-
-- Global configuration using `SWRConfig`
-
-- Cache, deduping, revalidation policies
-
-- **Axios**
-
-- Centralized Axios instance
-
-- Request & response interceptors
-
-- Typed API responses
-
-- Environment-based base URLs
-
-- Error normalization layer
+- ⚙️ **Dependencies Identified:**
+  - React Router (or similar library for routing).
+  - Authentication state management (e.g., `auth.store.ts`).
+  - Configuration management for environment-specific settings.
 
 ---
 
-## 🎨 STYLING & DESIGN SYSTEM
+## 💡 3. The Change / Solution Narrative
 
-### Styling Stack
+The solution involves implementing a modular routing system that separates public and private routes, integrates with the existing authentication system, and provides a scalable way to manage routes and links. This will include:
 
-- **Tailwind CSS**
-
-- **shadcn/ui**
-
-- **tailwindcss-debug-screens** (enabled in dev only)
-
-- PostCSS + autoprefixer
-
-### Design System Rules
-
-- Token-based design (spacing, color, typography)
-
-- Accessible components (WCAG-aligned)
-
-- Theme-ready (light/dark)
-
-- Composition over overrides
-
-- No inline styles
-
-- No uncontrolled Tailwind class sprawl
+1. **Modular Route Configuration:** Centralized route definitions for easy maintenance and scalability.
+2. **Private and Public Route Handling:** Logic to protect routes based on authentication status.
+3. **Dynamic Link Management:** A system to manage and generate links dynamically based on route configurations.
+4. **Integration with Authentication:** Seamless integration with the existing authentication system to control access to private routes.
 
 ---
 
-## 🧼 CODE QUALITY & GOVERNANCE (STRICT)
+## 📈 4. Expected Impact / Business Value
 
-### Enforced Tooling
-
-- ESLint (React + TypeScript strict)
-
-- Prettier
-
-- Husky + lint-staged
-
-- Commitlint (Conventional Commits)
-
-- Absolute imports with path aliases
-
-### Rules
-
-- ❌ No `any`
-
-- ❌ No unused exports
-
-- ❌ No implicit `any`
-
-- ❌ No circular dependencies
-
-- ✅ Linting, formatting, and tests must block commits
+| Metric                      | Before       | After      | Goal                                     |
+| --------------------------- | ------------ | ---------- | ---------------------------------------- |
+| Route Management Complexity | High         | Low        | Simplified and scalable routing          |
+| Access Control              | Manual       | Automated  | Secure and consistent access control     |
+| Developer Productivity      | Low          | High       | Faster feature development and debugging |
+| User Experience             | Inconsistent | Consistent | Seamless navigation and access control   |
 
 ---
 
-## 🧱 MODULAR PROJECT STRUCTURE (MANDATORY)
+## 🧱 5. Functional Requirement Details
 
-Design a **feature-based, domain-driven architecture**:
+1. [x] Create a centralized route configuration file to define all routes.
+2. [x] Implement logic to differentiate between public and private routes.
+3. [x] Integrate authentication state to control access to private routes.
+4. [x] Develop a dynamic link management system for generating links based on route configurations.
+5. [x] Ensure all routes are type-safe and adhere to TypeScript best practices.
+6. [x] Update the `App.tsx` file to use the new routing system.
+7. [x] Add unit and integration tests for the routing logic.
+
+---
+
+## ✅ 6. Acceptance Criteria (Gherkin Format)
 
 ```
+Given the user is authenticated
+When they navigate to a private route
+Then they should be granted access to the route
 
-src/
+Given the user is not authenticated
+When they navigate to a private route
+Then they should be redirected to the login page
 
-├── app/ # App bootstrap & providers
+Given the user is on any page
+When they click on a dynamically generated link
+Then they should be navigated to the correct route
 
-│ ├── main.tsx
-
-│ ├── App.tsx
-
-│ └── providers.tsx
-
-│
-
-├── features/ # Domain modules
-
-│ ├── auth/
-
-│ │ ├── components/
-
-│ │ ├── hooks/
-
-│ │ ├── store/
-
-│ │ ├── services/
-
-│ │ ├── auth.types.ts
-
-│ │ ├── auth.test.ts
-
-│ │ └── index.ts
-
-│ └── dashboard/
-
-│
-
-├── components/ # Shared UI components
-
-│
-
-├── hooks/ # Shared hooks
-
-│
-
-├── services/ # API & external services
-
-│ ├── axios.ts
-
-│ └── api-client.ts
-
-│
-
-├── stores/ # Cross-feature stores (if needed)
-
-│
-
-├── lib/ # Utilities & helpers
-
-│
-
-├── styles/ # Tailwind & global styles
-
-│
-
-├── types/ # Global types
-
-│
-
-├── config/ # Env & constants
-
-│
-
-└── tests/ # Shared test utilities
-
+Given the developer adds a new route
+When they define it in the centralized configuration
+Then the route should be automatically integrated into the routing system
 ```
 
-### Architecture Rules
+---
 
-- Feature owns its UI, state, services, and tests
+## ⚙️ 7. Constraints & Dependencies
 
-- Tests live **beside implementation files**
-
-- No cross-feature imports without explicit contracts
-
-- Shared logic must live outside `features/`
+- Use React Router for routing.
+- Ensure compatibility with the existing authentication system.
+- Maintain TypeScript type safety across all route definitions.
+- Follow the project's existing coding standards and best practices.
 
 ---
 
-## ⚙️ ENVIRONMENT & CONFIGURATION
+## 🧪 8. Non-Functional Requirements
 
-- Environment validation using `zod`
-
-- Runtime vs build-time config separation
-
-- No hardcoded values
-
-- `.env.example` required
+- **Performance:** Routes should load efficiently without unnecessary delays.
+- **Security:** Private routes must be securely protected against unauthorized access.
+- **Scalability:** The routing system should easily accommodate new routes and features.
+- **Maintainability:** Route configurations should be easy to read, update, and debug.
+- **User Experience:** Navigation should be smooth and intuitive for end-users.
 
 ---
 
-## 🧪 TESTING STRATEGY (MANDATORY)
+## 🧭 9. Risks & Assumptions
 
-### Testing Framework
-
-- **Vitest**
-
-- **@testing-library/react**
-
-- **MSW** for API mocking
-
-### Rules
-
-- Test files live next to source files
-
-- Store logic must be unit tested
-
-- Components must have interaction tests
-
-- Coverage thresholds enforced
+| Risk                                            | Impact | Mitigation                                   |
+| ----------------------------------------------- | ------ | -------------------------------------------- |
+| Integration issues with existing authentication | High   | Thorough testing and incremental integration |
+| Performance degradation with complex routing    | Medium | Optimize route definitions and lazy loading  |
+| Inconsistent route handling                     | Low    | Centralized configuration and strict typing  |
 
 ---
 
-## 📡 OBSERVABILITY & ERROR HANDLING
+## 🧰 10. Implementation Notes
 
-Include:
+- **Folder Structure:**
+  - `src/config/routes.ts`: Centralized route definitions.
+  - `src/lib/routing/`: Utilities for dynamic link generation and route handling.
+  - `src/features/auth/guards/`: Guards for private route protection.
 
-- Centralized logging utility
-
-- Error boundaries
-
-- SWR error normalization
-
-- Request tracing headers
-
-- Ready hooks for:
-
-- Sentry
-
-- OpenTelemetry
-
-- Datadog
+- **Utilities:**
+  - Dynamic link generator based on route names.
+  - Route guards for authentication checks.
 
 ---
 
-## ⚡ PERFORMANCE BEST PRACTICES
+## 🧾 11. Story Summary (for Sprint Demo)
 
-- Memoized selectors
-
-- Code-splitting by feature
-
-- Lazy loading where appropriate
-
-- Optimized Zustand subscriptions
-
-- SWR cache discipline
+This story implements a scalable and modular routing system that separates public and private routes, integrates with the existing authentication system, and provides dynamic link management. The solution simplifies route management, enhances security, and improves developer productivity, ultimately leading to a better user experience.
 
 ---
 
-## 📘 DOCUMENTATION (REQUIRED)
+## 🧩 12. Verification Checklist (Post-Implementation)
 
-Provide:
-
-1. **README.md**
-
-2. Folder structure explanation
-
-3. State & data flow architecture
-
-4. Styling & design system usage
-
-5. Testing strategy & examples
-
-6. Observability & error handling guide
+- [ ] Acceptance criteria validated
+- [ ] Test coverage maintained
+- [ ] No regressions introduced
+- [ ] Documentation updated
 
 ---
 
-## 📦 OUTPUT REQUIREMENTS
+## 📘 13. Document Meta
 
-Your response **must include**:
-
-1. Full folder structure
-
-2. Dependency list with reasoning
-
-3. Vite configuration
-
-4. Tailwind + shadcn setup
-
-5. Zustand feature store example
-
-6. SWR + Axios global configuration
-
-7. Typed API service example
-
-8. shadcn component example
-
-9. Vitest test example
-
-10. CI-ready scripts
-
----
-
-## 🔐 NON-NEGOTIABLE RULES
-
-- Strict TypeScript
-
-- No global mutable state
-
-- No hidden coupling
-
-- All business logic testable
-
-- Quality gates must fail builds on violations
-
----
-
-## ▶️ START INSTRUCTION
-
-Create a **complete, enterprise-ready React + Vite frontend project setup** that satisfies **all requirements above**, using **latest stable packages**, and clearly explain **architectural decisions**.
-
-Do **not** return partial or conceptual output.
-
-Treat this as a **long-term production foundation**.
-
----
+| Field          | Value      |
+| -------------- | ---------- |
+| Author         | Kilo Code  |
+| Created On     | 2026-01-18 |
+| Related Ticket | N/A        |
+| Reviewers      | N/A        |
