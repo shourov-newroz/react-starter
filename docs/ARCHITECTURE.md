@@ -298,10 +298,55 @@ Vendor libraries are chunked into separate files:
 
 ### Code Quality
 
-1. **ESLint**: Enforces code quality rules
-2. **Prettier**: Ensures consistent formatting
-3. **Husky**: Runs pre-commit checks
-4. **commitlint**: Enforces commit message format
+This project enforces strict code quality standards through pre-commit checks. All checks must pass before code can be committed:
+
+1. **TypeScript Type Checking**: Validates type safety across the entire codebase
+
+   ```bash
+   npx tsc --noEmit
+   ```
+
+2. **ESLint**: Enforces code quality rules and best practices
+
+   ```bash
+   npx eslint . --ext ts,tsx
+   ```
+
+3. **Prettier**: Ensures consistent code formatting
+
+   ```bash
+   npx prettier --check "src/**/*.{ts,tsx,json,css,md}"
+   ```
+
+4. **Vitest**: Runs the full test suite
+
+   ```bash
+   npx vitest run
+   ```
+
+5. **commitlint**: Enforces Conventional Commit message format
+   ```bash
+   npx commitlint --edit $1
+   ```
+
+#### Pre-Commit Checks Flow
+
+```mermaid
+flowchart TD
+    A[Git Commit] --> B[Run TypeScript Type Check]
+    B --> C{Type Check Pass?}
+    C -->|No| D[Exit with Error]
+    C -->|Yes| E[Run ESLint]
+    E --> F{Linting Pass?}
+    F -->|No| D
+    F -->|Yes| G[Check Prettier Formatting]
+    G --> H{Formatting Pass?}
+    H -->|No| D
+    H -->|Yes| I[Run Tests]
+    I --> J{Tests Pass?
+    J -->|No| D
+    J -->|Yes| K[Commit Accepted]
+```
 
 ### Testing Strategy
 
@@ -312,12 +357,17 @@ Vendor libraries are chunked into separate files:
 
 ### CI/CD Pipeline
 
+The CI/CD pipeline runs the same quality checks as the pre-commit hooks to ensure consistency across local and remote environments:
+
 ```yaml
-# Typical CI pipeline stages
+# CI pipeline stages - mirrors pre-commit checks
 1. Install dependencies
-2. Run linting
-3. Run formatting check
-4. Run tests
-5. Build production bundle
-6. (Optional) Deploy
+2. Run TypeScript type checking
+3. Run linting
+4. Check formatting
+5. Run tests
+6. Build production bundle
+7. (Optional) Deploy
 ```
+
+> **Note**: The CI pipeline enforces the same checks as `.husky/pre-commit` to prevent any commits that would fail the pre-commit hooks from reaching the repository.
