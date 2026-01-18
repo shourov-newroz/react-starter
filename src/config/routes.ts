@@ -30,6 +30,7 @@ export const routes: RouteConfig[] = [
       }))
     ),
     name: 'ErrorHandlingDemo',
+    isPrivate: true,
   },
   {
     path: '*',

@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import routes from '@/config/routes';
+import { PrivateRouteGuard } from '@/features/auth';
 
 import { Providers } from './providers';
 
@@ -52,8 +53,20 @@ function AppRoutes(): React.ReactNode {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
-        {routes.map(({ path, component: Component }) => (
-          <Route key={path} path={path} element={<Component />} />
+        {routes.map(({ path, component: Component, isPrivate }) => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              isPrivate ? (
+                <PrivateRouteGuard>
+                  <Component />
+                </PrivateRouteGuard>
+              ) : (
+                <Component />
+              )
+            }
+          />
         ))}
       </Routes>
     </Suspense>

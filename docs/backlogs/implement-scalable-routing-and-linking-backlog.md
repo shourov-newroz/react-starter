@@ -48,16 +48,16 @@
 
 #### Tasks:
 
-- [ ] Create route guards for private routes in `src/features/auth/guards/`.
-- [ ] Implement logic to check authentication status before granting access to private routes.
-- [ ] Redirect unauthenticated users to the login page when they attempt to access private routes.
-- [ ] Ensure public routes remain accessible without authentication.
+- [x] Create route guards for private routes in `src/features/auth/guards/`.
+- [x] Implement logic to check authentication status before granting access to private routes.
+- [x] Redirect unauthenticated users to the login page when they attempt to access private routes.
+- [x] Ensure public routes remain accessible without authentication.
 
 #### Verification:
 
-- [ ] Verify that authenticated users can access private routes.
-- [ ] Verify that unauthenticated users are redirected to the login page when attempting to access private routes.
-- [ ] Ensure public routes are accessible without authentication.
+- [x] Verify that authenticated users can access private routes.
+- [x] Verify that unauthenticated users are redirected to the login page when attempting to access private routes.
+- [x] Ensure public routes are accessible without authentication.
 
 ---
 
