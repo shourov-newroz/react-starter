@@ -101,14 +101,14 @@
 
 #### Tasks:
 
-- [ ] Refactor `AppRoutes` in `App.tsx` to use the centralized route configuration.
-- [ ] Integrate route guards for private routes.
-- [ ] Ensure the application correctly renders routes based on the new configuration.
+- [x] Refactor `AppRoutes` in `App.tsx` to use the centralized route configuration.
+- [x] Integrate route guards for private routes.
+- [x] Ensure the application correctly renders routes based on the new configuration.
 
 #### Verification:
 
-- [ ] Verify that the application correctly renders routes based on the new configuration.
-- [ ] Ensure route guards are correctly applied to private routes.
+- [x] Verify that the application correctly renders routes based on the new configuration.
+- [x] Ensure route guards are correctly applied to private routes.
 
 ---
 
