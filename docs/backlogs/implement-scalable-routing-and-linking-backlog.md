@@ -67,14 +67,14 @@
 
 #### Tasks:
 
-- [ ] Use the `useAuthStore` from `src/features/auth/store/auth.store.ts` to check authentication status.
-- [ ] Implement route guards that use the authentication state to control access.
-- [ ] Ensure the authentication state is persisted and correctly reflects the user's login status.
+- [x] Use the `useAuthStore` from `src/features/auth/store/auth.store.ts` to check authentication status.
+- [x] Implement route guards that use the authentication state to control access.
+- [x] Ensure the authentication state is persisted and correctly reflects the user's login status.
 
 #### Verification:
 
-- [ ] Verify that the authentication state is correctly used to control route access.
-- [ ] Ensure the authentication state is persisted across page reloads.
+- [x] Verify that the authentication state is correctly used to control route access.
+- [x] Ensure the authentication state is persisted across page reloads.
 
 ---
 
