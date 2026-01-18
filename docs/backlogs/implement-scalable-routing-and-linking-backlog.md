@@ -118,14 +118,14 @@
 
 #### Tasks:
 
-- [ ] Write unit tests for route guards and utilities.
-- [ ] Write integration tests for the routing system.
-- [ ] Ensure test coverage for all routing-related code.
+- [x] Write unit tests for route guards and utilities.
+- [x] Write integration tests for the routing system.
+- [x] Ensure test coverage for all routing-related code.
 
 #### Verification:
 
-- [ ] Verify that all unit tests pass.
-- [ ] Ensure integration tests cover all routing scenarios.
+- [x] Verify that all unit tests pass.
+- [x] Ensure integration tests cover all routing scenarios.
 
 ---
 

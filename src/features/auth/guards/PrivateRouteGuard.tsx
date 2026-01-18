@@ -14,5 +14,5 @@ export function PrivateRouteGuard({ children }: PrivateRouteGuardProps): ReactNo
     return <Navigate to="/login" replace />;
   }
 
-  return children;
+  return <>{children}</>;
 }

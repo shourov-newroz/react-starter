@@ -93,4 +93,10 @@ export default defineConfig([
       'prettier/prettier': 'error',
     },
   },
+  {
+    files: ['**/*.{test,spec}.{ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'warn',
+    },
+  },
 ])
