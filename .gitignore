@@ -37,5 +37,8 @@ coverage
 *.sln
 *.sw?
 
+*docs/backlogs
+*docs/requirements
+
 # OS files
 Thumbs.db
