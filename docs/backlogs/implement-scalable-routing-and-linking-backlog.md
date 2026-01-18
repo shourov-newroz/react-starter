@@ -78,23 +78,6 @@
 
 ---
 
-### Story 4: Develop Dynamic Link Management System
-
-**Objective:** Create a system to manage and generate links dynamically based on route configurations.
-
-#### Tasks:
-
-- [ ] Create a utility in `src/lib/routing/` to generate links based on route names.
-- [ ] Implement functions to generate paths for navigation.
-- [ ] Replace hardcoded links in components with dynamically generated links.
-
-#### Verification:
-
-- [ ] Verify that dynamically generated links navigate to the correct routes.
-- [ ] Ensure all hardcoded links are replaced with dynamically generated links.
-
----
-
 ### Story 5: Ensure Type Safety for Routes
 
 **Objective:** Ensure all routes are type-safe and adhere to TypeScript best practices.
