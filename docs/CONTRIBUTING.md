@@ -195,6 +195,52 @@ function loginForm() {
 - Use index.ts files for barrel exports
 - Keep related files together in feature directories
 
+### Routing Conventions
+
+When adding new routes:
+
+1. **Create feature route files**: Place route definitions in `src/features/[feature]/routes/[feature].routes.ts`
+
+2. **Define route constants**: Use constants for route paths:
+
+   ```typescript
+   export const FEATURE_LINKS = {
+     NEW_PAGE: '/new-page',
+   };
+   ```
+
+3. **Export route array**: Export routes as `FEATURE_ROUTES: RouteConfig[]`
+
+4. **Import into central config**: Add `...FEATURE_ROUTES` to `src/config/routes.ts`
+
+5. **Mark private routes**: Set `isPrivate: true` for protected routes
+
+6. **Use lazy loading**: Always use `React.lazy()` for components
+
+Example:
+
+```typescript
+// src/features/new-feature/routes/new-feature.routes.ts
+import { lazy } from 'react';
+
+export const NEW_FEATURE_LINKS = {
+  DASHBOARD: '/dashboard',
+};
+
+export const NEW_FEATURE_ROUTES: RouteConfig[] = [
+  {
+    path: NEW_FEATURE_LINKS.DASHBOARD,
+    component: lazy(() =>
+      import('@/features/new-feature/pages/DashboardPage').then((module) => ({
+        default: module.DashboardPage,
+      }))
+    ),
+    name: 'Dashboard',
+    isPrivate: true,
+  },
+];
+```
+
 ### Naming Conventions
 
 | Item       | Convention       | Example           |

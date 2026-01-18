@@ -207,6 +207,92 @@ Error boundaries catch JavaScript errors anywhere in the component tree:
 
 ---
 
+## Routing System
+
+### Centralized Route Configuration
+
+Routes are defined in a centralized configuration file `src/config/routes.ts` using the `RouteConfig` interface:
+
+```typescript
+export interface RouteConfig {
+  path: string;
+  component: React.LazyExoticComponent<React.ComponentType>;
+  isPrivate?: boolean;
+  name: string;
+}
+```
+
+This approach provides:
+
+- Centralized route management
+- Type safety for route definitions
+- Easy addition of new routes
+- Consistent route structure across features
+
+### Feature-Based Routing
+
+Each feature maintains its own route definitions in dedicated route files:
+
+- `src/features/auth/routes/auth.routes.ts`
+- `src/features/demo/routes/demo.routes.ts`
+
+Routes are exported as arrays and imported into the central configuration:
+
+```typescript
+export const routes: RouteConfig[] = [
+  {
+    path: '/',
+    component: lazy(() => import('@/app/App').then((module) => ({ default: module.HomePage }))),
+    name: 'Home',
+  },
+  ...AUTH_ROUTES,
+  ...DEMO_ROUTES,
+  // ...
+];
+```
+
+### Route Guards
+
+Private routes are protected using the `PrivateRouteGuard` component:
+
+```typescript
+<PrivateRouteGuard>
+  <Component />
+</PrivateRouteGuard>
+```
+
+The guard checks authentication status from the auth store and redirects to `/login` if not authenticated.
+
+### Route Rendering
+
+Routes are rendered in `App.tsx` using React Router with Suspense for code splitting:
+
+```typescript
+<Suspense fallback={<Loading />}>
+  <Routes>
+    {routes.map(({ path, component: Component, isPrivate }) => (
+      <Route
+        key={path}
+        path={path}
+        element={
+          isPrivate ? (
+            <PrivateRouteGuard>
+              <Component />
+            </PrivateRouteGuard>
+          ) : (
+            <Component />
+          )
+        }
+      />
+    ))}
+  </Routes>
+</Suspense>
+```
+
+This ensures automatic code splitting for all routes and consistent guard application.
+
+---
+
 ## Error Handling
 
 ### Error Types
