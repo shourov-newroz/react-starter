@@ -37,7 +37,7 @@ coverage
 *.sln
 *.sw?
 
-*docs/backlog
+*docs/backlogs
 *docs/requirements
 
 # OS files
