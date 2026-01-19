@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { routes } from '@/config/routes';
 import { useAuth } from '@/features/auth';
 import type { RouteConfig } from '@/types/route.types';
@@ -38,7 +39,11 @@ const AppRoutes: React.FC = () => {
       element = route.element;
     }
 
-    return <Suspense fallback={<LoadingFallback />}>{element}</Suspense>;
+    return (
+      <Suspense fallback={<LoadingFallback />}>
+        <ErrorBoundary>{element}</ErrorBoundary>
+      </Suspense>
+    );
   };
 
   const renderRoutes = (routes: RouteConfig[]): React.ReactNode => {
