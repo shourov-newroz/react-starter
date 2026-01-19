@@ -14,8 +14,16 @@ describe('PrivateRouteGuard', () => {
   it('should render children when user is authenticated', () => {
     vi.mocked(useAuthStore).mockImplementation((selector) =>
       selector({
+        user: null,
         isAuthenticated: true,
-      } as any)
+        isLoading: false,
+        error: null,
+        setUser: () => {},
+        clearUser: () => {},
+        setLoading: () => {},
+        setError: () => {},
+        _reset: () => {},
+      })
     );
 
     render(
@@ -39,8 +47,16 @@ describe('PrivateRouteGuard', () => {
   it('should redirect to login when user is not authenticated', () => {
     vi.mocked(useAuthStore).mockImplementation((selector) =>
       selector({
+        user: null,
         isAuthenticated: false,
-      } as any)
+        isLoading: false,
+        error: null,
+        setUser: () => {},
+        clearUser: () => {},
+        setLoading: () => {},
+        setError: () => {},
+        _reset: () => {},
+      })
     );
 
     render(
