@@ -1,6 +1,6 @@
-import { lazy } from 'react';
+import React, { lazy } from 'react';
 
-import type { RouteConfig } from '@/config/routes';
+import type { RouteConfig } from '@/types/route.types';
 
 // Define auth route link constantan
 export const AUTH_LINKS = {
@@ -10,10 +10,13 @@ export const AUTH_LINKS = {
 // Define auth routes
 export const AUTH_ROUTES: RouteConfig[] = [
   {
-    path: AUTH_LINKS.LOGIN,
-    component: lazy(() =>
-      import('@/features/auth/pages/LoginPage').then((module) => ({ default: module.LoginPage }))
-    ),
     name: 'Login',
+    path: AUTH_LINKS.LOGIN,
+    element: React.createElement(
+      lazy(() =>
+        import('@/features/auth/pages/LoginPage').then((module) => ({ default: module.LoginPage }))
+      )
+    ),
+    isPublic: true,
   },
 ];

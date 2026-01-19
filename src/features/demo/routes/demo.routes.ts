@@ -1,6 +1,6 @@
-import { lazy } from 'react';
+import React, { lazy } from 'react';
 
-import type { RouteConfig } from '@/config/routes';
+import type { RouteConfig } from '@/types/route.types';
 
 // Define auth route link constantan
 export const DEMO_LINKS = {
@@ -11,12 +11,13 @@ export const DEMO_LINKS = {
 export const DEMO_ROUTES: RouteConfig[] = [
   {
     path: DEMO_LINKS.ERROR_DEMO,
-    component: lazy(() =>
-      import('@/features/demo/pages/ErrorHandlingDemo').then((module) => ({
-        default: module.ErrorHandlingDemo,
-      }))
+    element: React.createElement(
+      lazy(() =>
+        import('@/features/demo/pages/ErrorHandlingDemo').then((module) => ({
+          default: module.ErrorHandlingDemo,
+        }))
+      )
     ),
     name: 'ErrorHandlingDemo',
-    isPrivate: true,
   },
 ];

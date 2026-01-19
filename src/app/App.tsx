@@ -1,77 +1,74 @@
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import routes from '@/config/routes';
-import { PrivateRouteGuard } from '@/features/auth';
+import { routes } from '@/config/routes';
+import { useAuth } from '@/features/auth';
+import type { RouteConfig } from '@/types/route.types';
 
+import AuthGuard from './AuthGuard';
 import { Providers } from './providers';
+import UnauthorizedRoute from './UnauthorizedRoute';
 
-const Loading = (): React.ReactElement => (
-  <div className="flex h-screen w-full items-center justify-center">
-    <div className="flex flex-col items-center gap-4">
-      <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-      <p className="text-muted-foreground">Loading...</p>
-    </div>
+export const LoadingFallback: React.FC = () => (
+  <div className="flex justify-center items-center h-screen">
+    <div className="w-8 h-8 rounded-full border-t-2 border-b-2 animate-spin border-primary"></div>
   </div>
 );
 
-function HomePage(): React.ReactElement {
-  return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold tracking-tight">Welcome to React Starter</h1>
-      <p className="mt-4 text-muted-foreground">
-        This is a production-grade React + Vite + TypeScript frontend foundation.
-      </p>
-      <div className="mt-8 flex gap-4">
-        <a
-          href="/login"
-          className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90"
-        >
-          Go to Login
-        </a>
-        <a
-          href="/error-demo"
-          className="inline-flex items-center justify-center rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground shadow hover:bg-secondary/80"
-        >
-          Error Handling Demo
-        </a>
-      </div>
-    </div>
-  );
-}
+const AppRoutes: React.FC = () => {
+  const { isAuthenticated, isLoading } = useAuth();
 
-function NotFoundPage(): React.ReactElement {
-  return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold tracking-tight">404</h1>
-      <p className="mt-4 text-muted-foreground">Page not found</p>
-    </div>
-  );
-}
+  const renderRouteElement = (route: RouteConfig): React.ReactNode => {
+    let element;
 
-function AppRoutes(): React.ReactNode {
-  return (
-    <Suspense fallback={<Loading />}>
-      <Routes>
-        {routes.map(({ path, component: Component, isPrivate }) => (
-          <Route
-            key={path}
-            path={path}
-            element={
-              isPrivate ? (
-                <PrivateRouteGuard>
-                  <Component />
-                </PrivateRouteGuard>
-              ) : (
-                <Component />
-              )
-            }
-          />
-        ))}
-      </Routes>
-    </Suspense>
-  );
-}
+    if (route.isProtected) {
+      if (isLoading) {
+        return <LoadingFallback />;
+      }
+
+      // Protected routes
+      element = <AuthGuard isAuthenticated={isAuthenticated}>{route.element}</AuthGuard>;
+    } else if (route.isPublic) {
+      // Public routes that should redirect to dashboard if authenticated
+      element = (
+        <UnauthorizedRoute isAuthenticated={isAuthenticated}>{route.element}</UnauthorizedRoute>
+      );
+    } else {
+      // Regular public routes
+      element = route.element;
+    }
+
+    return <Suspense fallback={<LoadingFallback />}>{element}</Suspense>;
+  };
+
+  const renderRoutes = (routes: RouteConfig[]): React.ReactNode => {
+    return routes.map((route, index) => {
+      // For layout routes, we want to render the layout element with its children
+      if (route.isLayout) {
+        return (
+          <Route key={`layout-${index}`} element={renderRouteElement(route)}>
+            {route.children && renderRoutes(route.children)}
+          </Route>
+        );
+      }
+
+      // For index routes
+      if (route.index) {
+        return <Route key={`index-${index}`} index element={renderRouteElement(route)} />;
+      }
+
+      // For regular routes
+      const routeKey = route.path || `route-${index}`;
+      return (
+        <Route key={routeKey} path={route.path} element={renderRouteElement(route)}>
+          {route.children && renderRoutes(route.children)}
+        </Route>
+      );
+    });
+  };
+
+  return <Routes>{renderRoutes(routes)}</Routes>;
+};
 
 function App(): React.ReactNode {
   return (
@@ -82,4 +79,3 @@ function App(): React.ReactNode {
 }
 
 export default App;
-export { HomePage, NotFoundPage };
