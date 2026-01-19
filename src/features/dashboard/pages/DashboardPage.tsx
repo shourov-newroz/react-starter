@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { AUTH_LINKS } from '@/features/auth';
 import { DEMO_LINKS } from '@/features/demo';
 
-function HomePage(): React.ReactElement {
+export function DashboardPage(): React.ReactElement {
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold tracking-tight">Welcome to React Starter</h1>
@@ -29,4 +29,4 @@ function HomePage(): React.ReactElement {
   );
 }
 
-export default HomePage;
+export default DashboardPage;

@@ -19,23 +19,13 @@ export const DASHBOARD_ROUTES: RouteConfig[] = [
     children: [
       {
         index: true,
-        element: React.createElement(
-          lazy(() =>
-            import('../pages/DashboardPage').then((module) => ({
-              default: module.default,
-            }))
-          )
-        ),
+        element: React.createElement(lazy(() => import('../pages/DashboardPage'))),
         name: 'Dashboard',
         isPublic: true,
       },
       {
         path: DASHBOARD_LINKS.PROFILE,
-        element: React.createElement(
-          lazy(() =>
-            Promise.resolve({ default: () => React.createElement('div', null, 'User Profile') })
-          )
-        ),
+        element: React.createElement(lazy(() => import('../pages/ProfilePage'))),
         name: 'Profile',
       },
     ],

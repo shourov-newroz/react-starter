@@ -11,13 +11,7 @@ export const DEMO_LINKS = {
 export const DEMO_ROUTES: RouteConfig[] = [
   {
     path: DEMO_LINKS.ERROR_DEMO,
-    element: React.createElement(
-      lazy(() =>
-        import('@/features/demo/pages/ErrorHandlingDemo').then((module) => ({
-          default: module.ErrorHandlingDemo,
-        }))
-      )
-    ),
+    element: React.createElement(lazy(() => import('../pages/ErrorHandlingDemo'))),
     name: 'ErrorHandlingDemo',
   },
 ];

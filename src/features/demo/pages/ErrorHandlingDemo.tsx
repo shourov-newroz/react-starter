@@ -18,7 +18,7 @@ import { ErrorType } from '@/types/error.types';
  * 3. Error normalization utility
  * 4. Error type classification
  */
-export function ErrorHandlingDemo(): React.ReactElement {
+function ErrorHandlingDemo(): React.ReactElement {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [logOutput, setLogOutput] = useState<string[]>([]);
 
