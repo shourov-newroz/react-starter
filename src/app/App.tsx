@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { LoadingFallback } from '@/components/LoadingFallback';
 import { routes } from '@/config/routes';
 import { useAuth } from '@/features/auth';
 import type { RouteConfig } from '@/types/route.types';
@@ -9,12 +10,6 @@ import type { RouteConfig } from '@/types/route.types';
 import AuthGuard from './AuthGuard';
 import { Providers } from './providers';
 import UnauthorizedRoute from './UnauthorizedRoute';
-
-export const LoadingFallback: React.FC = () => (
-  <div className="flex justify-center items-center h-screen">
-    <div className="w-8 h-8 rounded-full border-t-2 border-b-2 animate-spin border-primary"></div>
-  </div>
-);
 
 const AppRoutes: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth();
