@@ -14,19 +14,20 @@ export const DASHBOARD_ROUTES: RouteConfig[] = [
   {
     element: DashboardLayout,
     isLayout: true,
-    isPublic: true,
     path: DASHBOARD_LINKS.DASHBOARD,
+    auth: 'authenticated',
     children: [
       {
         index: true,
         element: React.lazy(() => import('../pages/DashboardPage')),
         name: 'Dashboard',
-        isPublic: true,
+        auth: 'authenticated',
       },
       {
         path: DASHBOARD_LINKS.PROFILE,
         element: React.lazy(() => import('../pages/ProfilePage')),
         name: 'Profile',
+        auth: 'authenticated',
       },
     ],
   },

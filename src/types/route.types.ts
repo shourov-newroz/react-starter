@@ -1,30 +1,21 @@
 import React from 'react';
 
+type AuthRequirement = 'public' | 'guest' | 'authenticated';
+
 type BaseRoute = {
   element?: React.ComponentType | React.ReactNode;
   name?: string;
   children?: RouteConfig[];
+  auth: AuthRequirement;
 };
 
-type PublicRoute = BaseRoute & {
-  isPublic?: true;
-  isProtected?: never;
-};
-
-type ProtectedRoute = BaseRoute & {
-  isPublic?: never;
-  isProtected?: true;
-};
-
-type BaseRouteWithAuth = PublicRoute | ProtectedRoute;
-
-type LayoutRoute = BaseRouteWithAuth & {
+type LayoutRoute = BaseRoute & {
   isLayout: true;
   path?: string;
   index?: never;
 };
 
-type PathRoute = BaseRouteWithAuth & {
+type PathRoute = BaseRoute & {
   isLayout?: never;
   path?: string;
   index?: boolean;

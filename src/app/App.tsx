@@ -24,16 +24,16 @@ const AppRoutes: React.FC = () => {
   const renderRouteElement = (route: RouteConfig): React.ReactNode => {
     let element;
 
-    if (route.isProtected) {
+    if (route.auth === 'authenticated') {
       if (isLoading) {
         return <LoadingFallback />;
       }
 
-      // Protected routes
+      // only authenticated routes
       element = (
         <AuthGuard isAuthenticated={isAuthenticated}>{renderElement(route.element)}</AuthGuard>
       );
-    } else if (route.isPublic) {
+    } else if (route.auth === 'guest') {
       // Public routes that should redirect to dashboard if authenticated
       element = (
         <UnauthorizedRoute isAuthenticated={isAuthenticated}>

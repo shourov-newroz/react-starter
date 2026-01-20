@@ -13,6 +13,6 @@ export const AUTH_ROUTES: RouteConfig[] = [
     name: 'Login',
     path: AUTH_LINKS.LOGIN,
     element: React.lazy(() => import('@/features/auth/pages/LoginPage')),
-    isPublic: true,
+    auth: 'guest',
   },
 ];

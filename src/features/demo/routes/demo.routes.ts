@@ -13,5 +13,6 @@ export const DEMO_ROUTES: RouteConfig[] = [
     path: DEMO_LINKS.ERROR_DEMO,
     element: React.lazy(() => import('@/features/demo/pages/ErrorHandlingDemo')),
     name: 'ErrorHandlingDemo',
+    auth: 'public',
   },
 ];
