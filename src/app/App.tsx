@@ -14,6 +14,13 @@ import UnauthorizedRoute from './UnauthorizedRoute';
 const AppRoutes: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth();
 
+  const renderElement = (el: React.ComponentType | React.ReactNode): React.ReactNode => {
+    if (typeof el === 'function') {
+      return React.createElement(el);
+    }
+    return el;
+  };
+
   const renderRouteElement = (route: RouteConfig): React.ReactNode => {
     let element;
 
@@ -23,15 +30,19 @@ const AppRoutes: React.FC = () => {
       }
 
       // Protected routes
-      element = <AuthGuard isAuthenticated={isAuthenticated}>{route.element}</AuthGuard>;
+      element = (
+        <AuthGuard isAuthenticated={isAuthenticated}>{renderElement(route.element)}</AuthGuard>
+      );
     } else if (route.isPublic) {
       // Public routes that should redirect to dashboard if authenticated
       element = (
-        <UnauthorizedRoute isAuthenticated={isAuthenticated}>{route.element}</UnauthorizedRoute>
+        <UnauthorizedRoute isAuthenticated={isAuthenticated}>
+          {renderElement(route.element)}
+        </UnauthorizedRoute>
       );
     } else {
       // Regular public routes
-      element = route.element;
+      element = renderElement(route.element);
     }
 
     return (

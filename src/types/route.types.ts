@@ -1,7 +1,7 @@
 import React from 'react';
 
 type BaseRoute = {
-  element?: React.ReactNode;
+  element?: React.ComponentType | React.ReactNode;
   name?: string;
   children?: RouteConfig[];
 };

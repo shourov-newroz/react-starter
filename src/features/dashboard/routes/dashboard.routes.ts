@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React from 'react';
 
 import type { RouteConfig } from '@/types/route.types';
 
@@ -12,20 +12,20 @@ export const DASHBOARD_LINKS = {
 
 export const DASHBOARD_ROUTES: RouteConfig[] = [
   {
-    element: React.createElement(DashboardLayout),
+    element: DashboardLayout,
     isLayout: true,
     isPublic: true,
     path: DASHBOARD_LINKS.DASHBOARD,
     children: [
       {
         index: true,
-        element: React.createElement(lazy(() => import('../pages/DashboardPage'))),
+        element: React.lazy(() => import('../pages/DashboardPage')),
         name: 'Dashboard',
         isPublic: true,
       },
       {
         path: DASHBOARD_LINKS.PROFILE,
-        element: React.createElement(lazy(() => import('../pages/ProfilePage'))),
+        element: React.lazy(() => import('../pages/ProfilePage')),
         name: 'Profile',
       },
     ],

@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React from 'react';
 
 import type { RouteConfig } from '@/types/route.types';
 
@@ -12,7 +12,7 @@ export const AUTH_ROUTES: RouteConfig[] = [
   {
     name: 'Login',
     path: AUTH_LINKS.LOGIN,
-    element: React.createElement(lazy(() => import('@/features/auth/pages/LoginPage'))),
+    element: React.lazy(() => import('@/features/auth/pages/LoginPage')),
     isPublic: true,
   },
 ];
