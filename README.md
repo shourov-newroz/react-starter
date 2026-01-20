@@ -108,10 +108,12 @@ npm run dev
 | `npm run lint:fix`      | Fix ESLint errors         |
 | `npm run format`        | Format code with Prettier |
 | `npm run format:check`  | Check formatting          |
-| `npm run test`          | Run tests with UI         |
+| `npm run preview`       | Preview production build  |
+| `npm run test`          | Run tests in watch mode   |
+| `npm run test:ui`       | Run tests with UI         |
 | `npm run test:run`      | Run tests in CI mode      |
 | `npm run test:coverage` | Run tests with coverage   |
-| `npm run preview`       | Preview production build  |
+| `npm run prepare`       | Set up Husky git hooks    |
 
 ## 📁 Project Structure
 
@@ -119,15 +121,20 @@ npm run dev
 src/
 ├── app/                    # Application entry point
 │   ├── App.tsx            # Root component with routing
+│   ├── AuthGuard.tsx      # Authentication guard component
 │   ├── providers.tsx      # Context providers
+│   ├── UnauthorizedRoute.tsx # Unauthorized route handler
 │   └── main.tsx           # Entry point
 ├── assets/                # Static assets
 ├── components/            # Shared components
 │   ├── ui/               # shadcn/ui components
-│   └── ErrorBoundary.tsx # Error boundary
+│   ├── ErrorBoundary.tsx     # Error boundary
+│   ├── ErrorBoundary.test.tsx
+│   └── LoadingFallback.tsx   # Loading fallback component
 ├── config/                # Configuration
 │   ├── env.ts            # Environment validation
-│   └── index.ts          # Config exports
+│   ├── index.ts          # Config exports
+│   └── routes.ts         # Route configuration
 ├── features/              # Feature modules
 │   └── auth/             # Auth feature example
 │       ├── components/   # Feature components
@@ -140,11 +147,12 @@ src/
 ├── lib/                   # Utilities
 │   ├── error.ts          # Error handling
 │   ├── logger.ts         # Logging utility
+│   ├── serverErrorHandler.ts # Server error handler
 │   ├── swr-config.ts     # SWR configuration
 │   └── utils.ts          # Helper functions
 ├── services/              # API services
-│   ├── axios.ts          # Axios instance
-│   └── api-client.ts     # API client wrapper
+│   ├── api-client.ts     # API client wrapper
+│   └── axios.ts          # Axios instance
 ├── stores/                # Global stores
 ├── styles/                # Global styles
 │   └── index.css         # Tailwind imports
@@ -154,8 +162,12 @@ src/
 │   └── test-utils.tsx    # Test utilities
 └── types/                 # TypeScript types
     ├── api.types.ts      # API types
+    ├── env.d.ts          # Environment types
     ├── error.types.ts    # Error types
-    └── global.d.ts       # Global declarations
+    ├── global.d.ts       # Global declarations
+    ├── index.ts          # Type exports
+    ├── route.types.ts    # Route types
+    └── store.types.ts    # Store types
 ```
 
 ## 🔧 Configuration
