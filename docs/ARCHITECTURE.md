@@ -215,10 +215,14 @@ Routes are defined in a centralized configuration file `src/config/routes.ts` us
 
 ```typescript
 export interface RouteConfig {
-  path: string;
-  component: React.LazyExoticComponent<React.ComponentType>;
-  isPrivate?: boolean;
-  name: string;
+  path?: string;
+  element?: React.ComponentType | React.ReactNode;
+  isLayout?: boolean;
+  isPublic?: boolean;
+  isProtected?: boolean;
+  name?: string;
+  children?: RouteConfig[];
+  index?: boolean;
 }
 ```
 
@@ -226,6 +230,7 @@ This approach provides:
 
 - Centralized route management
 - Type safety for route definitions
+- Support for nested routes and layouts
 - Easy addition of new routes
 - Consistent route structure across features
 
@@ -234,62 +239,83 @@ This approach provides:
 Each feature maintains its own route definitions in dedicated route files:
 
 - `src/features/auth/routes/auth.routes.ts`
+- `src/features/dashboard/routes/dashboard.routes.ts`
 - `src/features/demo/routes/demo.routes.ts`
 
 Routes are exported as arrays and imported into the central configuration:
 
 ```typescript
-export const routes: RouteConfig[] = [
-  {
-    path: '/',
-    component: lazy(() => import('@/app/App').then((module) => ({ default: module.HomePage }))),
-    name: 'Home',
-  },
-  ...AUTH_ROUTES,
-  ...DEMO_ROUTES,
-  // ...
-];
+export const routes: RouteConfig[] = [...AUTH_ROUTES, ...DASHBOARD_ROUTES, ...DEMO_ROUTES];
 ```
+
+### Path Constants Convention
+
+All route paths are defined as uppercase constants in the route files:
+
+```typescript
+export const AUTH_LINKS = {
+  LOGIN: '/login',
+};
+
+export const DASHBOARD_LINKS = {
+  DASHBOARD: '/',
+  PROFILE: '/profile',
+};
+```
+
+This ensures consistency and makes it easy to reference paths throughout the application.
+
+### Lazy Loading Standards
+
+All route components use React.lazy for code splitting:
+
+```typescript
+element: React.lazy(() => import('../pages/DashboardPage'));
+```
+
+- Use named imports for consistency
+- All lazy-loaded routes are wrapped in Suspense with LoadingFallback
+- Code splitting is verified through bundle analysis
 
 ### Route Guards
 
-Private routes are protected using the `PrivateRouteGuard` component:
+Routes are protected using authentication-based rendering in `App.tsx`:
+
+- `isPublic`: Routes accessible to all users
+- `isProtected`: Routes requiring authentication
+- Automatic redirection handled by `AuthGuard` and `UnauthorizedRoute` components
+
+### Error Boundaries in Routes
+
+All route elements are wrapped with ErrorBoundary components for graceful error handling:
 
 ```typescript
-<PrivateRouteGuard>
-  <Component />
-</PrivateRouteGuard>
-```
-
-The guard checks authentication status from the auth store and redirects to `/login` if not authenticated.
-
-### Route Rendering
-
-Routes are rendered in `App.tsx` using React Router with Suspense for code splitting:
-
-```typescript
-<Suspense fallback={<Loading />}>
-  <Routes>
-    {routes.map(({ path, component: Component, isPrivate }) => (
-      <Route
-        key={path}
-        path={path}
-        element={
-          isPrivate ? (
-            <PrivateRouteGuard>
-              <Component />
-            </PrivateRouteGuard>
-          ) : (
-            <Component />
-          )
-        }
-      />
-    ))}
-  </Routes>
+<Suspense fallback={<LoadingFallback />}>
+  <ErrorBoundary>
+    {element}
+  </ErrorBoundary>
 </Suspense>
 ```
 
-This ensures automatic code splitting for all routes and consistent guard application.
+This ensures that route-level errors don't crash the entire application and provide user-friendly error messages.
+
+### Route Rendering
+
+Routes are rendered in `App.tsx` using React Router v6 with nested route support:
+
+```typescript
+const renderRouteElement = (route: RouteConfig): React.ReactNode => {
+  // Authentication-based element wrapping
+  // ...
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <ErrorBoundary>{element}</ErrorBoundary>
+    </Suspense>
+  );
+};
+```
+
+This supports complex nested routing, automatic code splitting, and consistent error handling.
 
 ---
 
@@ -333,12 +359,14 @@ This ensures automatic code splitting for all routes and consistent guard applic
 Routes are automatically code-split using React.lazy:
 
 ```typescript
-const LoginPage = lazy(() =>
-  import('@/features/auth/pages/LoginPage').then((module) => ({
-    default: module.LoginPage,
-  }))
-);
+element: React.lazy(() => import('../pages/DashboardPage'));
 ```
+
+- All route components are lazy-loaded for optimal bundle sizes
+- Bundle analyzer confirms separate chunks for each feature
+- Vendor libraries are split into dedicated chunks (react-vendor, ui-vendor, etc.)
+
+````
 
 ### Bundle Optimization
 
@@ -390,7 +418,7 @@ This project enforces strict code quality standards through pre-commit checks. A
 
    ```bash
    npx tsc --noEmit
-   ```
+````
 
 2. **ESLint**: Enforces code quality rules and best practices
 
