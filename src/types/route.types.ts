@@ -3,7 +3,7 @@ import React from 'react';
 type AuthRequirement = 'public' | 'guest' | 'authenticated';
 
 type BaseRoute = {
-  element?: React.ComponentType | React.ReactNode;
+  element?: React.ComponentType | React.LazyExoticComponent<React.ComponentType<unknown>>;
   name?: string;
   children?: RouteConfig[];
   auth: AuthRequirement;

@@ -14,11 +14,10 @@ import UnauthorizedRoute from './UnauthorizedRoute';
 const AppRoutes: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth();
 
-  const renderElement = (el: React.ComponentType | React.ReactNode): React.ReactNode => {
-    if (typeof el === 'function') {
-      return React.createElement(el);
-    }
-    return el;
+  // Properly typed renderElement
+  const renderElement = (el: RouteConfig['element']): React.ReactNode => {
+    if (!el) return null;
+    return React.createElement(el);
   };
 
   const renderRouteElement = (route: RouteConfig): React.ReactNode => {
