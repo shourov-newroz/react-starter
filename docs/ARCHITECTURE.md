@@ -214,15 +214,16 @@ Error boundaries catch JavaScript errors anywhere in the component tree:
 Routes are defined in a centralized configuration file `src/config/routes.ts` using the `RouteConfig` interface:
 
 ```typescript
+type AuthRequirement = 'public' | 'guest' | 'authenticated';
+
 export interface RouteConfig {
   path?: string;
   element?: React.ComponentType | React.ReactNode;
   isLayout?: boolean;
-  isPublic?: boolean;
-  isProtected?: boolean;
   name?: string;
   children?: RouteConfig[];
   index?: boolean;
+  auth: AuthRequirement;
 }
 ```
 
@@ -233,6 +234,7 @@ This approach provides:
 - Support for nested routes and layouts
 - Easy addition of new routes
 - Consistent route structure across features
+- Clear authentication requirements per route
 
 ### Feature-Based Routing
 
@@ -281,8 +283,9 @@ element: React.lazy(() => import('../pages/DashboardPage'));
 
 Routes are protected using authentication-based rendering in `App.tsx`:
 
-- `isPublic`: Routes accessible to all users
-- `isProtected`: Routes requiring authentication
+- `'public'`: Routes accessible to all users with no authentication checks
+- `'guest'`: Routes only accessible to unauthenticated users (redirects authenticated users)
+- `'authenticated'`: Routes requiring user authentication (redirects to login if not authenticated)
 - Automatic redirection handled by `AuthGuard` and `UnauthorizedRoute` components
 
 ### Error Boundaries in Routes

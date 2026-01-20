@@ -213,15 +213,22 @@ When adding new routes:
 
 4. **Import into central config**: Add `...FEATURE_ROUTES` to `src/config/routes.ts`
 
-5. **Mark private routes**: Set `isPrivate: true` for protected routes
+5. **Set authentication requirements**: Use the `auth` property with one of:
+   - `'public'`: Accessible to all users
+   - `'guest'`: Only for unauthenticated users (redirects authenticated users)
+   - `'authenticated'`: Requires user authentication
 
 6. **Use lazy loading**: Always use `React.lazy()` for components
+
+7. **Use proper element typing**: Set `element` to `React.lazy(() => import('...'))` for lazy components
 
 Example:
 
 ```typescript
 // src/features/new-feature/routes/new-feature.routes.ts
-import { lazy } from 'react';
+import React, { lazy } from 'react';
+
+import type { RouteConfig } from '@/types/route.types';
 
 export const NEW_FEATURE_LINKS = {
   DASHBOARD: '/dashboard',
@@ -230,13 +237,9 @@ export const NEW_FEATURE_LINKS = {
 export const NEW_FEATURE_ROUTES: RouteConfig[] = [
   {
     path: NEW_FEATURE_LINKS.DASHBOARD,
-    component: lazy(() =>
-      import('@/features/new-feature/pages/DashboardPage').then((module) => ({
-        default: module.DashboardPage,
-      }))
-    ),
+    element: React.lazy(() => import('../pages/DashboardPage')),
     name: 'Dashboard',
-    isPrivate: true,
+    auth: 'authenticated',
   },
 ];
 ```

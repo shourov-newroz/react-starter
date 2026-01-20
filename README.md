@@ -29,6 +29,7 @@ A production-grade React frontend foundation from scratch with enterprise-ready 
 - Path aliases for clean imports
 - Strict TypeScript configuration
 - Environment validation with Zod
+- Auth-based routing system with clear access controls
 
 ### Data Layer
 
@@ -279,11 +280,7 @@ npm run build
 Routes are automatically code-split using React.lazy:
 
 ```typescript
-const LoginPage = lazy(() =>
-  import('@/features/auth/pages/LoginPage').then((module) => ({
-    default: module.LoginPage,
-  }))
-);
+const LoginPage = React.lazy(() => import('@/features/auth/pages/LoginPage'));
 ```
 
 ## 🤝 Contributing
