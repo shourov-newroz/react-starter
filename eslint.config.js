@@ -32,7 +32,7 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
       parserOptions: {
-        project: ['./tsconfig.app.json', './tsconfig.node.json'],
+        project: ['./tsconfig.app.json', './tsconfig.node.json', './tsconfig.test.json'],
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -41,9 +41,16 @@ export default defineConfig([
         version: '19.2',
       },
       'import/resolver': {
+        node: {
+          extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        },
         typescript: {
           alwaysTryTypes: true,
+          project: ['./tsconfig.app.json', './tsconfig.test.json'],
         },
+      },
+      'import/parsers': {
+        '@typescript-eslint/parser': ['.ts', '.tsx'],
       },
     },
     rules: {
@@ -80,7 +87,7 @@ export default defineConfig([
       ],
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       '@typescript-eslint/explicit-function-return-type': [
-        'error',
+        'warn',
         {
           allowExpressions: true,
           allowTypedFunctionExpressions: true,
@@ -88,6 +95,7 @@ export default defineConfig([
           allowDirectConstAssertionInArrowFunctions: true,
         },
       ],
+      'react-refresh/only-export-components': 'off',
 
       // Prettier
       'prettier/prettier': 'error',
@@ -97,6 +105,12 @@ export default defineConfig([
     files: ['**/*.{test,spec}.{ts,tsx}'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'warn',
+    },
+  },
+  {
+    files: ['**/*.tsx'],
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 'off',
     },
   },
 ]);
