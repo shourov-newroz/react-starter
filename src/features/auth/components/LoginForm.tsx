@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 import { useAuth } from '../hooks/use-auth';
+import { useAuthT } from '../hooks/useTranslation';
 
 /**
  * Login form component
@@ -22,6 +23,7 @@ export function LoginForm(): ReactElement {
   const { login, isLoading, error } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const t = useAuthT();
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
@@ -31,17 +33,17 @@ export function LoginForm(): ReactElement {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>Login</CardTitle>
-        <CardDescription>Enter your credentials to access your account</CardDescription>
+        <CardTitle>{t('Login')}</CardTitle>
+        <CardDescription>{t('Enter your credentials to access your account')}</CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('Email')}</Label>
             <Input
               id="email"
               type="email"
-              placeholder="you@example.com"
+              placeholder={t('Email placeholder')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -49,11 +51,11 @@ export function LoginForm(): ReactElement {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t('Password')}</Label>
             <Input
               id="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder={t('Password placeholder')}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -68,10 +70,12 @@ export function LoginForm(): ReactElement {
         </CardContent>
         <CardFooter>
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Logging in...' : 'Login'}
+            {isLoading ? t('Signing in...') : t('Sign In')}
           </Button>
         </CardFooter>
       </form>
     </Card>
   );
 }
+
+export default LoginForm;

@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { normalizeError } from '@/lib/error';
+import { useCommonT } from '@/lib/i18n/useAppTranslation';
 import { logger } from '@/lib/logger';
 import type { ApiError } from '@/types/api.types';
 import { ErrorType } from '@/types/error.types';
@@ -21,6 +22,7 @@ import { ErrorType } from '@/types/error.types';
 function ErrorHandlingDemo(): React.ReactElement {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [logOutput, setLogOutput] = useState<string[]>([]);
+  const t = useCommonT();
 
   const addLog = (message: string): void => {
     setLogOutput((prev) => [...prev, `[${new Date().toLocaleTimeString()}] ${message}`]);
@@ -88,9 +90,13 @@ function ErrorHandlingDemo(): React.ReactElement {
   return (
     <div className="container mx-auto py-8 space-y-8">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Error Handling & Observability Demo</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          {t('Error Handling & Observability Demo')}
+        </h1>
         <p className="text-muted-foreground mt-2">
-          This page demonstrates the error handling and observability features of the application.
+          {t(
+            'This page demonstrates the error handling and observability features of the application.'
+          )}
         </p>
       </div>
 
@@ -98,15 +104,16 @@ function ErrorHandlingDemo(): React.ReactElement {
         {/* Error Boundary Demo */}
         <Card>
           <CardHeader>
-            <CardTitle>ErrorBoundary Demo</CardTitle>
+            <CardTitle>{t('ErrorBoundary Demo')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
-              Click the button below to throw an error that will be caught by the ErrorBoundary. The
-              ErrorBoundary will display a fallback UI with the error message.
+              {t(
+                'Click the button below to throw an error that will be caught by the ErrorBoundary. The ErrorBoundary will display a fallback UI with the error message.'
+              )}
             </p>
             <Button onClick={handleThrowError} variant="destructive">
-              Throw Error
+              {t('Throw Error')}
             </Button>
           </CardContent>
         </Card>
@@ -114,25 +121,26 @@ function ErrorHandlingDemo(): React.ReactElement {
         {/* Logger Demo */}
         <Card>
           <CardHeader>
-            <CardTitle>Logger Demo</CardTitle>
+            <CardTitle>{t('Logger Demo')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
-              Test the logger utility with different log levels. Check the browser console to see
-              the output.
+              {t(
+                'Test the logger utility with different log levels. Check the browser console to see the output.'
+              )}
             </p>
             <div className="flex flex-wrap gap-2">
               <Button onClick={() => handleLoggerDemo('debug')} variant="outline" size="sm">
-                Debug
+                {t('Debug')}
               </Button>
               <Button onClick={() => handleLoggerDemo('info')} variant="outline" size="sm">
-                Info
+                {t('Info')}
               </Button>
               <Button onClick={() => handleLoggerDemo('warn')} variant="outline" size="sm">
-                Warn
+                {t('Warn')}
               </Button>
               <Button onClick={() => handleLoggerDemo('error')} variant="outline" size="sm">
-                Error
+                {t('Error')}
               </Button>
             </div>
           </CardContent>
@@ -141,21 +149,21 @@ function ErrorHandlingDemo(): React.ReactElement {
         {/* Error Normalization Demo */}
         <Card>
           <CardHeader>
-            <CardTitle>Error Normalization Demo</CardTitle>
+            <CardTitle>{t('Error Normalization Demo')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
-              Test the normalizeError utility with different error types.
+              {t('Test the normalizeError utility with different error types.')}
             </p>
             <div className="flex flex-wrap gap-2">
               <Button onClick={handleApiError} variant="default" size="sm">
-                API Error (401)
+                {t('API Error (401)')}
               </Button>
               <Button onClick={handleValidationError} variant="default" size="sm">
-                Validation Error (400)
+                {t('Validation Error (400)')}
               </Button>
               <Button onClick={handleNetworkError} variant="default" size="sm">
-                Network Error
+                {t('Network Error')}
               </Button>
             </div>
           </CardContent>
@@ -164,7 +172,7 @@ function ErrorHandlingDemo(): React.ReactElement {
         {/* Error Form Demo */}
         <Card>
           <CardHeader>
-            <CardTitle>Error Form Demo</CardTitle>
+            <CardTitle>{t('Error Form Demo')}</CardTitle>
           </CardHeader>
           <CardContent>
             <form
@@ -175,14 +183,14 @@ function ErrorHandlingDemo(): React.ReactElement {
               className="space-y-4"
             >
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('Email')}</Label>
                 <Input id="email" type="email" placeholder="Enter your email" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t('Password')}</Label>
                 <Input id="password" type="password" placeholder="Enter your password" required />
               </div>
-              <Button type="submit">Submit (will show error)</Button>
+              <Button type="submit">{t('Submit (will show error)')}</Button>
               {errorMessage && <p className="text-sm text-destructive mt-2">{errorMessage}</p>}
             </form>
           </CardContent>
@@ -192,12 +200,12 @@ function ErrorHandlingDemo(): React.ReactElement {
       {/* Log Output */}
       <Card>
         <CardHeader>
-          <CardTitle>Log Output</CardTitle>
+          <CardTitle>{t('Log Output')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="bg-muted p-4 rounded-lg font-mono text-sm max-h-64 overflow-auto">
             {logOutput.length === 0 ? (
-              <p className="text-muted-foreground">No logs yet. Try the demos above.</p>
+              <p className="text-muted-foreground">{t('No logs yet. Try the demos above.')}</p>
             ) : (
               <ul className="space-y-1">
                 {logOutput.map((log, index) => (
@@ -213,7 +221,7 @@ function ErrorHandlingDemo(): React.ReactElement {
             className="mt-4"
             disabled={logOutput.length === 0}
           >
-            Clear Logs
+            {t('Clear Logs')}
           </Button>
         </CardContent>
       </Card>
@@ -221,7 +229,7 @@ function ErrorHandlingDemo(): React.ReactElement {
       {/* Documentation */}
       <Card>
         <CardHeader>
-          <CardTitle>Error Types Reference</CardTitle>
+          <CardTitle>{t('Error Types Reference')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

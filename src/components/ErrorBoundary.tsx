@@ -1,5 +1,6 @@
 import { Component, type ReactNode } from 'react';
 
+import { useCommonT } from '@/lib/i18n/useAppTranslation';
 import { logger } from '@/lib/logger';
 
 interface Props {
@@ -31,23 +32,29 @@ export class ErrorBoundary extends Component<Props, State> {
   render(): ReactNode {
     if (this.state.hasError) {
       return (
-        this.props.fallback || (
-          <div className="flex min-h-screen items-center justify-center">
-            <div className="text-center">
-              <h1 className="text-2xl font-bold">Something went wrong</h1>
-              <p className="mt-2 text-muted-foreground">{this.state.error?.message}</p>
-              <button
-                onClick={() => window.location.reload()}
-                className="mt-4 rounded bg-primary px-4 py-2 text-white"
-              >
-                Reload Page
-              </button>
-            </div>
-          </div>
-        )
+        this.props.fallback || <ErrorBoundaryFallback errorMessage={this.state.error?.message} />
       );
     }
 
     return this.props.children;
   }
+}
+
+function ErrorBoundaryFallback({ errorMessage }: { errorMessage?: string }): ReactNode {
+  const t = useCommonT();
+
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-2xl font-bold">{t('Something went wrong')}</h1>
+        <p className="mt-2 text-muted-foreground">{errorMessage}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-4 rounded bg-primary px-4 py-2 text-white"
+        >
+          {t('Reload Page')}
+        </button>
+      </div>
+    </div>
+  );
 }

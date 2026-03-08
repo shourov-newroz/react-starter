@@ -1,5 +1,6 @@
 import js from '@eslint/js';
 import prettierConfig from 'eslint-config-prettier';
+import i18nextPlugin from 'eslint-plugin-i18next';
 import importPlugin from 'eslint-plugin-import';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import prettierPlugin from 'eslint-plugin-prettier';
@@ -11,7 +12,7 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig([
-  globalIgnores(['dist', 'node_modules', 'coverage']),
+  globalIgnores(['dist', 'node_modules', 'coverage', 'scripts']),
   {
     files: ['**/*.{ts,tsx}'],
     ignores: ['**/vitest.config.ts'],
@@ -27,6 +28,7 @@ export default defineConfig([
       'jsx-a11y': jsxA11y,
       react: reactPlugin,
       prettier: prettierPlugin,
+      i18next: i18nextPlugin,
     },
     languageOptions: {
       ecmaVersion: 2020,
@@ -99,12 +101,16 @@ export default defineConfig([
 
       // Prettier
       'prettier/prettier': 'error',
+
+      // i18next - Detect hardcoded strings in JSX text nodes only
+      'i18next/no-literal-string': 'error',
     },
   },
   {
     files: ['**/*.{test,spec}.{ts,tsx}'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'warn',
+      'i18next/no-literal-string': 'off',
     },
   },
   {

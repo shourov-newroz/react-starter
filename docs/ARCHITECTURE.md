@@ -411,6 +411,124 @@ Vendor libraries are chunked into separate files:
 
 ---
 
+## Localization Architecture
+
+This project uses a **hybrid localization architecture** that combines feature-based (decentralized) and centralized approaches.
+
+### Namespace Configuration
+
+The project defines namespaces in [`src/lib/i18n/locales.ts`](src/lib/i18n/locales.ts). Each namespace maps to a translation file and has an owner:
+
+| Namespace | Location | Owner | Type |
+| --------- | -------- | ----- | ---- |
+| `auth` | `src/features/auth/locales/{lang}.json` | Auth Feature Team | Feature |
+| `dashboard` | `src/features/dashboard/locales/{lang}.json` | Dashboard Feature Team | Feature |
+| `common` | `src/lib/i18n/locales/{lang}/common.json` | Core/Platform Team | Shared |
+| `navigation` | `src/lib/i18n/locales/{lang}/navigation.json` | Core/Platform Team | Shared |
+| `language` | `src/lib/i18n/locales/{lang}/language.json` | Core/Platform Team | Shared |
+
+### Ownership Decision Matrix
+
+Use this matrix to determine which namespace to use for new translation keys:
+
+| String Type | Namespace | Location | Owner |
+| ------------ | --------- | -------- | ----- |
+| Feature-specific UI labels (login form, dashboard widgets) | `auth`, `dashboard`, etc. | `src/features/{feature}/locales/` | Feature team |
+| Error messages | `common` | `src/lib/i18n/locales/` | Core/Platform team |
+| Navigation items | `navigation` | `src/lib/i18n/locales/` | Core/Platform team |
+| Button text, form labels (reused across features) | `common` | `src/lib/i18n/locales/` | Core/Platform team |
+| Validation messages | `common` | `src/lib/i18n/locales/` | Core/Platform team |
+| Language selector UI | `language` | `src/lib/i18n/locales/` | Core/Platform team |
+
+### Translation Hooks
+
+Import translation hooks from the central i18n module:
+
+```typescript
+// For feature-specific translations
+import { useAuthT, useDashboardT } from '@/lib/i18n';
+
+// For shared/common translations
+import { useCommonT, useNavigationT, useLanguageT } from '@/lib/i18n';
+
+// For any namespace (with namespace prefix)
+import { useT } from '@/lib/i18n';
+
+// Usage with namespace prefix
+const t = useT();
+t('auth:Login');           // auth namespace
+t('dashboard:welcome');    // dashboard namespace
+t('common:Loading');       // common namespace
+```
+
+### Import Convention
+
+**Always import translation hooks from `@/lib/i18n`** - the central module that re-exports all feature and shared hooks. This ensures:
+
+- Consistent import patterns across the codebase
+- Single source of truth for hook definitions
+- Easy refactoring when moving between features
+
+### Adding New Feature Translations
+
+1. Create `src/features/{feature-name}/locales/` directory
+2. Add translation JSON files: `en.json`, `ar.json`, `ku.json`
+3. Namespace add manually to `NAMESPACE_CONFIG`
+4. Import using: `import { use{Feature}T } from '@/features/{Feature}'`
+
+### Anti-Patterns to Avoid
+
+- ❌ Duplicating shared strings in feature namespaces
+- ❌ Adding feature-specific strings to central locale files
+- ❌ Using hardcoded strings instead of translation keys
+- ❌ Mixing namespace usage within a single component inconsistently
+- ❌ Importing from feature directories instead of `@/lib/i18n`
+
+### Quick Reference Card
+
+| Scenario | Use This Namespace | Import From |
+| -------- | ------------------ | ------------ |
+| Login form UI | `auth` | `@/features/auth` |
+| Registration form | `auth` | `@/features/auth` |
+| Dashboard widgets | `dashboard` | `@/features/dashboard` |
+| Profile page | `dashboard` | `@/features/profile` |
+| Navigation menu items | `navigation` | `@/lib/i18n` |
+| Language selector | `language` | `@/lib/i18n` |
+| Generic button text | `common` | `@/lib/i18n` |
+| Error messages | `common` | `@/lib/i18n` |
+| Validation messages | `common` | `@/lib/i18n` |
+| Loading states | `common` | `@/lib/i18n` |
+
+**Quick Decision Tree:**
+
+```
+Is this string used in multiple features?
+├── YES → Use `common`, `navigation`, or `language`
+└── NO → Is it specific to a feature?
+    ├── YES → Use feature namespace (auth, dashboard)
+    └── NO → Use `common`
+```
+
+**Import Pattern:**
+
+```typescript
+// ✅ CORRECT - Import from central module
+import { useAuthT, useDashboardT, useCommonT } from '@/lib/i18n';
+
+// ❌ WRONG - Import from feature directories
+import { useAuthT } from '@/features/auth/hooks/useTranslation';
+```
+
+### RTL Support
+
+The project supports RTL languages (Arabic and Kurdish). When adding new translations:
+
+- Ensure text content flows correctly in RTL mode
+- Test UI components in both LTR and RTL modes
+- Use CSS logical properties (`margin-inline-start`(ms-1) instead of `margin-left`(ml-1))
+
+---
+
 ## Development Workflow
 
 ### Code Quality

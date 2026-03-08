@@ -24,7 +24,7 @@ describe('LoginForm', () => {
     expect(screen.getByText(/enter your credentials/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
   });
 
   it('renders email and password input fields correctly', () => {
@@ -57,7 +57,7 @@ describe('LoginForm', () => {
     // Trigger loading state by setting a timeout mock
     const emailInput = screen.getByLabelText(/email/i);
     const passwordInput = screen.getByLabelText(/password/i);
-    const submitButton = screen.getByRole('button', { name: /login/i });
+    const submitButton = screen.getByRole('button', { name: /sign in/i });
 
     // Initially inputs should be enabled
     expect(emailInput).not.toBeDisabled();
@@ -65,18 +65,11 @@ describe('LoginForm', () => {
     expect(submitButton).not.toBeDisabled();
   });
 
-  it('displays error message when login fails', async () => {
-    render(<LoginForm />);
-
-    // This test assumes the component properly displays errors from the hook
-    // Error display is conditional based on error state from useAuth
-  });
-
   it('prevents form submission with empty fields when required', async () => {
     const user = userEvent.setup();
     render(<LoginForm />);
 
-    const submitButton = screen.getByRole('button', { name: /login/i });
+    const submitButton = screen.getByRole('button', { name: /sign in/i });
 
     // Click submit without filling fields - should trigger HTML5 validation
     await user.click(submitButton);

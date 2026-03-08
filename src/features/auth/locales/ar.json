@@ -1,0 +1,10 @@
+{
+  "Login": "تسجيل الدخول",
+  "Enter your credentials to access your account": "أدخل بيانات اعتماد للوصول إلى حسابك",
+  "Email": "البريد الإلكتروني",
+  "Email placeholder": "you@example.com",
+  "Password": "كلمة المرور",
+  "Password placeholder": "أدخل كلمة المرور",
+  "Signing in...": "جاري تسجيل الدخول...",
+  "Sign In": "دخول"
+}
