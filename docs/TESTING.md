@@ -123,7 +123,71 @@ test('displays error message on failed login', async () => {
 });
 ```
 
-### 2. Use User Event for Interactions
+### 2. Use Test IDs for Reliable Queries
+
+Prefer using `data-testid` attributes over text-based queries. This makes tests more resilient to UI changes and internationalization:
+
+```typescript
+// ❌ Avoid text-based queries - fragile and breaks with translations
+test('displays submit button', () => {
+  render(<LoginForm />);
+  expect(screen.getByText(/sign in/i)).toBeInTheDocument();
+});
+
+// ✅ Use test IDs - reliable and independent of text content
+// In your component:
+// <button data-testid="login-submit-button">Sign In</button>
+
+test('displays submit button', () => {
+  render(<LoginForm />);
+  expect(screen.getByTestId('login-submit-button')).toBeInTheDocument();
+});
+
+// Testing button click with test ID
+test('submits form on button click', async () => {
+  const user = userEvent.setup();
+  render(<LoginForm />);
+
+  await user.type(screen.getByTestId('email-input'), 'test@example.com');
+  await user.type(screen.getByTestId('password-input'), 'password123');
+  await user.click(screen.getByTestId('login-submit-button'));
+
+  // Assert expected behavior
+});
+```
+
+**Adding Test IDs to Components:**
+
+```typescript
+// Add data-testid to interactive elements
+<input
+  type="email"
+  data-testid="login-email-input"
+  aria-label="Email address"
+/>
+
+<button
+  type="submit"
+  data-testid="login-submit-button"
+>
+  Sign In
+</button>
+
+// For composite components
+<div data-testid="error-message" className="error">
+  {errorMessage}
+</div>
+```
+
+**When to Use Test IDs:**
+
+- Form inputs and buttons
+- Error messages and status indicators
+- Elements that may change text frequently
+- Elements tested across multiple languages
+- Complex components with many nested elements
+
+### 3. Use User Event for Interactions
 
 ```typescript
 import userEvent from '@testing-library/user-event';
@@ -142,7 +206,7 @@ test('form submission', async () => {
 });
 ```
 
-### 3. Clean Up After Each Test
+### 4. Clean Up After Each Test
 
 ```typescript
 import { cleanup } from '@testing-library/react';
@@ -153,7 +217,7 @@ afterEach(() => {
 });
 ```
 
-### 4. Use waitFor for Async Operations
+### 5. Use waitFor for Async Operations
 
 ```typescript
 import { waitFor } from '@testing-library/react';

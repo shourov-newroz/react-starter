@@ -244,6 +244,99 @@ export const NEW_FEATURE_ROUTES: RouteConfig[] = [
 ];
 ```
 
+### Internationalization (i18n)
+
+When adding user-facing text to the application, follow these guidelines for internationalization:
+
+#### Feature-Specific Translations
+
+For translations specific to a feature, add keys to the feature's locale file:
+
+1. **Add to all language files**: If adding a new key to a feature, add it to all locale files in that feature's `locales/` directory
+
+   ```bash
+   # Example: Adding to auth feature
+   src/features/auth/locales/
+   ├── en.json   # Add new key here
+   ├── ar.json   # Add translated key here
+   └── ku.json   # Add translated key here
+   ```
+
+2. **Use the feature translation hook**: Create or use the feature-specific translation hook
+
+   ```typescript
+   // In src/features/auth/hooks/useTranslation.ts
+   import { useTranslation } from '@/lib/i18n/useAppTranslation';
+
+   export function useAuthTranslation() {
+     return useTranslation('auth');
+   }
+   ```
+
+3. **Use in components**:
+
+   ```tsx
+   const { t } = useAuthTranslation();
+   return <h1>{t('Login')}</h1>;
+   ```
+
+#### Shared Translations
+
+For common UI elements used across features (buttons, labels, error messages), use shared namespaces:
+
+1. **Available shared namespaces**:
+   - `common` - General strings (Loading, Error messages)
+   - `navigation` - Navigation labels
+   - `language` - Language-related strings
+
+2. **Use shorthand hooks**:
+
+   ```typescript
+   import { useCommonT, useNavigationT } from '@/lib/i18n/useAppTranslation';
+
+   const t = useCommonT();
+   const navT = useNavigationT();
+   ```
+
+#### Adding a New Language
+
+When adding support for a new language:
+
+1. Update `src/lib/i18n/locales.ts`:
+   - Add to `SUPPORTED_LANGUAGES` array
+   - Add to `LANGUAGE_DIRECTION` map
+   - Add to `LANGUAGE_NAMES` map
+   - Add to `LanguageCode` type
+
+2. Create translation files for all namespaces:
+   - Feature namespaces: `src/features/{feature}/locales/{lang}.json`
+   - Shared namespaces: `src/lib/i18n/locales/{lang}/{namespace}.json`
+
+3. Update namespace config in `src/lib/i18n/namespace-config.ts` if adding new namespaces
+
+#### Translation Best Practices
+
+- **Be consistent**: Use the same key across all language files
+- **Use interpolation**: For dynamic values, use `{{variable}}` syntax
+  ```json
+  { "Welcome, {{name}}!": "Welcome, {{name}}!" }
+  ```
+- **Handle plurals**: Use the `count` option for plural forms
+- **Keep it simple**: Avoid nested JSON structures - use flat keys
+- **Test RTL**: If adding RTL language support, test the UI layout
+
+#### Translation Commits
+
+When committing translation changes:
+
+```
+docs(i18n): add Arabic translations for auth feature
+
+feat(i18n): add Kurdish language support
+
+fix(i18n): correct missing translation keys in common namespace
+```
+
 ### Naming Conventions
 
 | Item       | Convention       | Example           |

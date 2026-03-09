@@ -30,6 +30,7 @@ A production-grade React frontend foundation from scratch with enterprise-ready 
 - Strict TypeScript configuration
 - Environment validation with Zod
 - Auth-based routing system with clear access controls
+- **Internationalization (i18n) with lazy-loaded translations and RTL support**
 
 ### Data Layer
 
@@ -73,6 +74,283 @@ A production-grade React frontend foundation from scratch with enterprise-ready 
 - Lazy loading with Suspense
 - Bundle analyzer
 - Vendor chunk optimization
+
+## 🌍 Internationalization (i18n)
+
+This project includes a full-featured internationalization system built with [i18next](https://www.i18next.com/) and [react-i18next](https://react.i18next.com/). It supports multiple languages with lazy-loaded translations, automatic language detection, and RTL (right-to-left) support.
+
+### Architecture
+
+The i18n system uses a namespace-based architecture with lazy loading:
+
+```
+src/
+├── lib/i18n/                    # Core i18n configuration
+│   ├── config.ts               # i18next initialization
+│   ├── locales.ts             # Language configuration
+│   ├── namespace-config.ts    # Namespace definitions
+│   ├── useAppTranslation.ts  # Translation hooks
+│   └── locales/               # Shared translation files
+│       ├── en/
+│       │   ├── common.json
+│       │   ├── navigation.json
+│       │   └── language.json
+│       ├── ar/
+│       └── ku/
+└── features/                    # Feature-specific translations
+    ├── auth/locales/
+    │   ├── en.json
+    │   ├── ar.json
+    │   └── ku.json
+    └── dashboard/locales/
+        ├── en.json
+        ├── ar.json
+        └── ku.json
+```
+
+**Key Features:**
+
+- **Lazy Loading**: Translations are loaded on-demand, not bundled with the initial app load
+- **Language Detection**: Automatically detects user preference from localStorage, browser settings, or HTML lang attribute
+- **RTL Support**: Automatic direction switching for RTL languages (Arabic, Kurdish)
+- **Feature Namespaces**: Translations organized by feature for better maintainability
+- **Type Safety**: Typed translation hooks with namespace support
+
+### Supported Languages
+
+| Code | Language | Native Name | Direction |
+| ---- | -------- | ----------- | --------- |
+| `en` | English  | English     | LTR       |
+| `ar` | Arabic   | العربية     | RTL       |
+| `ku` | Kurdish  | کوردی       | RTL       |
+
+### Namespaces
+
+The system uses two types of namespaces:
+
+| Namespace    | Type    | Location                          |
+| ------------ | ------- | --------------------------------- |
+| `auth`       | Feature | `src/features/auth/locales/`      |
+| `dashboard`  | Feature | `src/features/dashboard/locales/` |
+| `common`     | Shared  | `src/lib/i18n/locales/`           |
+| `navigation` | Shared  | `src/lib/i18n/locales/`           |
+| `language`   | Shared  | `src/lib/i18n/locales/`           |
+
+### Changing the Default Language
+
+To change the default language, modify the `DEFAULT_LANGUAGE` constant in [`src/lib/i18n/locales.ts`](src/lib/i18n/locales.ts:69):
+
+```typescript
+// src/lib/i18n/locales.ts
+export const DEFAULT_LANGUAGE: LanguageCode = 'en'; // Change to 'ar', 'ku', etc.
+```
+
+You may also need to update the fallback configuration in [`src/lib/i18n/config.ts`](src/lib/i18n/config.ts:80-86) if needed.
+
+### Adding New Translations
+
+#### Adding a New Language
+
+1. Add the language to `SUPPORTED_LANGUAGES` in [`src/lib/i18n/locales.ts`](src/lib/i18n/locales.ts:27):
+
+```typescript
+export const SUPPORTED_LANGUAGES: LanguageConfig[] = [
+  {
+    code: 'en',
+    name: 'English',
+    nativeName: 'English',
+    direction: 'ltr',
+  },
+  // Add new language here
+];
+```
+
+2. Add direction mapping in `LANGUAGE_DIRECTION`:
+
+```typescript
+export const LANGUAGE_DIRECTION: Record<LanguageCode, Direction> = {
+  en: 'ltr',
+  ar: 'rtl',
+  ku: 'rtl',
+  // Add new language direction
+};
+```
+
+3. Add language name in `LANGUAGE_NAMES`:
+
+```typescript
+export const LANGUAGE_NAMES: Record<LanguageCode, string> = {
+  en: 'English',
+  ar: 'العربية',
+  ku: 'کوردی',
+  // Add new language name
+};
+```
+
+4. Create translation files for each namespace:
+   - Feature namespaces: `src/features/{feature}/locales/{lang}.json`
+   - Shared namespaces: `src/lib/i18n/locales/{lang}/{namespace}.json`
+
+#### Adding New Translation Keys
+
+**For feature-specific translations:**
+Add keys to the feature's locale file (e.g., [`src/features/auth/locales/en.json`](src/features/auth/locales/en.json)):
+
+```json
+{
+  "Login": "Login",
+  "New Key": "Translation"
+}
+```
+
+**For shared translations:**
+Add keys to the appropriate shared locale file (e.g., [`src/lib/i18n/locales/en/common.json`](src/lib/i18n/locales/en/common.json)):
+
+```json
+{
+  "Loading": "Loading",
+  "New Key": "Translation"
+}
+```
+
+**Important:** Keys must be consistent across all language files for the same namespace.
+
+### Adding a New Namespace
+
+1. Add the namespace to `NAMESPACES` in [`src/lib/i18n/namespace-config.ts`](src/lib/i18n/namespace-config.ts:10):
+
+```typescript
+export const NAMESPACES = [
+  'auth',
+  'common',
+  'dashboard',
+  'navigation',
+  'language',
+  'newNamespace',
+] as const;
+```
+
+2. Configure the namespace path in `NAMESPACE_CONFIG`:
+
+```typescript
+export const NAMESPACE_CONFIG: Record<Namespace, NamespaceConfig> = {
+  // ... existing namespaces
+  newNamespace: {
+    name: 'newNamespace',
+    feature: 'newFeature', // or 'core' for shared
+    path: '/src/features/newFeature/locales', // or '/src/lib/i18n/locales'
+    isShared: false, // or true for shared
+  },
+};
+```
+
+3. Create translation files at the configured path.
+
+### Usage Examples
+
+#### Using the Translation Hook
+
+```tsx
+import { useTranslation } from '@/lib/i18n/useAppTranslation';
+
+// For a specific namespace
+const { t, i18n } = useTranslation('auth');
+
+// Translate a key
+return <h1>{t('Login')}</h1>;
+
+// With interpolation
+return <p>{t('Welcome {{name}}', { name: 'John' })}</p>;
+
+// With pluralization
+return <p>{t('item', { count: 5 })}</p>;
+```
+
+#### Using Shorthand Hooks
+
+The project provides convenience hooks for common namespaces:
+
+```tsx
+import { useT, useCommonT, useNavigationT, useLanguageT } from '@/lib/i18n/useAppTranslation';
+
+// Common namespace (default)
+const t = useCommonT();
+
+// Navigation namespace
+const navT = useNavigationT();
+
+// Language namespace
+const langT = useLanguageT();
+```
+
+#### Feature-Specific Hooks
+
+Each feature can provide its own translation hook:
+
+```tsx
+// In src/features/auth/hooks/useTranslation.ts
+export function useAuthTranslation() {
+  return useTranslation('auth');
+}
+
+// Usage in auth components
+const { t } = useAuthTranslation();
+```
+
+#### Switching Languages
+
+```tsx
+import { useChangeLanguage } from '@/lib/i18n/useAppTranslation';
+
+const changeLanguage = useChangeLanguage();
+
+// Switch to Arabic
+await changeLanguage('ar');
+```
+
+#### Using the LanguageSwitcher Component
+
+```tsx
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+
+// Simple usage
+<LanguageSwitcher />
+
+// With callback
+<LanguageSwitcher onLanguageChange={(lang) => console.log(lang)} />
+```
+
+#### Using Namespace-Prefixed Keys
+
+You can use keys from different namespaces without changing the namespace:
+
+```tsx
+const { t } = useTranslation('common');
+
+// Use auth namespace key
+t('auth:Login');
+
+// Use navigation namespace key
+t('navigation:Dashboard');
+```
+
+### Configuration
+
+The i18n system is configured in [`src/lib/i18n/config.ts`](src/lib/i18n/config.ts). Key settings:
+
+- **Language Detection Order**: localStorage → navigator → HTML lang attribute
+- **Caching**: User preference stored in localStorage under `i18nextLng`
+- **Missing Keys**: Warnings logged in development mode
+- **Suspense**: Enabled for async loading
+
+### Best Practices
+
+1. **Feature Ownership**: Each feature owns its translations in `src/features/{feature}/locales/`
+2. **Shared Translations**: Common strings (buttons, labels, errors) go in shared namespaces
+3. **Key Consistency**: Use identical keys across all language files
+4. **Interpolation**: Use `{{variable}}` syntax for dynamic values
+5. **Plurals**: Use the `count` option for plural forms
+6. **Context**: Use `_context` suffix for context-specific translations (e.g., `user_female`, `user_male`)
 
 ## 🛠️ Getting Started
 
