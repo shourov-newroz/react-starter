@@ -7,6 +7,7 @@ import { ChevronDown, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation as useI18nTranslation } from 'react-i18next';
 
+import { useChangeLanguage } from '@/lib/i18n';
 import {
   SUPPORTED_LANGUAGES,
   getLanguageConfigWithDefault,
@@ -31,11 +32,12 @@ interface LanguageSwitcherProps {
 export function LanguageSwitcher({ className, onLanguageChange }: LanguageSwitcherProps) {
   const { i18n } = useI18nTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const changeLanguage = useChangeLanguage();
 
   const currentLanguage = getLanguageConfigWithDefault(i18n.language);
 
   const handleLanguageSelect = async (languageCode: LanguageCode) => {
-    await i18n.changeLanguage(languageCode);
+    await changeLanguage(languageCode);
     setIsOpen(false);
     onLanguageChange?.(languageCode);
   };

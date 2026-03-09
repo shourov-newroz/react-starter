@@ -34,7 +34,13 @@ export {
 } from './locales';
 
 // Hooks
-export { useCommonT, useLanguageT, useNavigationT, useT } from './useAppTranslation';
+export {
+  useChangeLanguage,
+  useCommonT,
+  useLanguageT,
+  useNavigationT,
+  useT,
+} from './useAppTranslation';
 
 // Re-export for convenience
 export { updateDocumentDirection } from './config';
