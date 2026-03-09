@@ -408,22 +408,38 @@ src/
 │   ├── ui/               # shadcn/ui components
 │   ├── ErrorBoundary.tsx     # Error boundary
 │   ├── ErrorBoundary.test.tsx
-│   └── LoadingFallback.tsx   # Loading fallback component
+│   ├── LoadingFallback.tsx   # Loading fallback component
+│   └── LanguageSwitcher.tsx  # Language switcher component
 ├── config/                # Configuration
 │   ├── env.ts            # Environment validation
 │   ├── index.ts          # Config exports
 │   └── routes.ts         # Route configuration
 ├── features/              # Feature modules
-│   └── auth/             # Auth feature example
-│       ├── components/   # Feature components
-│       ├── hooks/        # Feature hooks
-│       ├── pages/        # Feature pages
-│       ├── services/     # API services
-│       ├── store/        # Zustand store
-│       └── auth.types.ts # Feature types
+│   ├── auth/             # Auth feature
+│   │   ├── components/   # Feature components
+│   │   ├── hooks/        # Feature hooks
+│   │   ├── locales/     # Feature translations
+│   │   ├── pages/        # Feature pages
+│   │   ├── routes/      # Feature routes
+│   │   ├── services/    # API services
+│   │   ├── store/       # Zustand store
+│   │   └── auth.types.ts # Feature types
+│   ├── dashboard/       # Dashboard feature
+│   │   ├── hooks/
+│   │   ├── layouts/
+│   │   ├── locales/     # Feature translations
+│   │   ├── pages/
+│   │   └── routes/
+│   └── demo/            # Demo feature
 ├── hooks/                 # Shared hooks
 ├── lib/                   # Utilities
 │   ├── error.ts          # Error handling
+│   ├── i18n/             # Internationalization (i18n)
+│   │   ├── config.ts    # i18next configuration
+│   │   ├── locales.ts   # Language configuration
+│   │   ├── namespace-config.ts  # Namespace definitions
+│   │   ├── useAppTranslation.ts # Translation hooks
+│   │   └── locales/     # Shared translations
 │   ├── logger.ts         # Logging utility
 │   ├── serverErrorHandler.ts # Server error handler
 │   ├── swr-config.ts     # SWR configuration
