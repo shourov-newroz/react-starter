@@ -13,13 +13,7 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-import {
-  DEFAULT_LANGUAGE,
-  getDirection,
-  getNamespacePath,
-  type Namespace,
-  NAMESPACES,
-} from './locales';
+import { DEFAULT_LANGUAGE, getDirection, getNamespacePath, type Namespace } from './locales';
 import { DEFAULT_NAMESPACE } from './namespace-config';
 
 /**
@@ -84,7 +78,8 @@ const customBackend = {
 // i18next configuration options
 const i18nextOptions = {
   // Default language
-  fallbackLng: DEFAULT_LANGUAGE,
+  // fallbackLng: DEFAULT_LANGUAGE,
+  fallbackLng: false as const,
 
   // Disable fallback - only load the selected language
   // This prevents loading en when page reloads with saved language
@@ -93,9 +88,15 @@ const i18nextOptions = {
   // Debug mode in development only
   debug: import.meta.env.DEV,
 
-  // Namespace configuration - use multiple namespaces
-  ns: [...NAMESPACES],
+  // Namespace configuration - only load default namespace initially
+  // Namespaces will be loaded on-demand when accessed
+  ns: DEFAULT_NAMESPACE,
+  //  ns: [...NAMESPACES], // Load all namespaces at startup (not recommended for large apps)
   defaultNS: DEFAULT_NAMESPACE,
+
+  // Allow loading languages/namespaces on-demand (lazy loading)
+  // This prevents loading all namespaces at startup
+  partialBundledLanguages: true,
 
   // Language detector configuration
   detection: {

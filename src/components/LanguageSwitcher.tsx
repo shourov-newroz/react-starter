@@ -5,7 +5,7 @@
 
 import { ChevronDown, Globe } from 'lucide-react';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation as useI18nTranslation } from 'react-i18next';
 
 import {
   SUPPORTED_LANGUAGES,
@@ -29,7 +29,7 @@ interface LanguageSwitcherProps {
  * Supports both LTR and RTL orientations
  */
 export function LanguageSwitcher({ className, onLanguageChange }: LanguageSwitcherProps) {
-  const { i18n } = useTranslation();
+  const { i18n } = useI18nTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   const currentLanguage = getLanguageConfigWithDefault(i18n.language);

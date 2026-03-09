@@ -6,7 +6,7 @@
 
 import { useTranslation as useI18nTranslation, type UseTranslationResponse } from 'react-i18next';
 
-import { NAMESPACES, type Namespace } from './locales';
+import { type Namespace } from './locales';
 
 /**
  * Extended translation function type with key suggestions
@@ -32,7 +32,7 @@ export function useTranslation<const N extends Namespace>(
  */
 export function useT(): AppTranslationFunction {
   // Use default namespace - i18next will resolve namespace-prefixed keys automatically
-  const { t } = useI18nTranslation(NAMESPACES);
+  const { t } = useI18nTranslation();
   return t as AppTranslationFunction;
 }
 
@@ -64,7 +64,7 @@ export function useLanguageT(): AppTranslationFunction {
  * Hook that returns the current language
  */
 export function useCurrentLanguage(): string {
-  const { i18n } = useI18nTranslation(NAMESPACES);
+  const { i18n } = useI18nTranslation();
   return i18n.language;
 }
 
@@ -72,7 +72,7 @@ export function useCurrentLanguage(): string {
  * Hook for changing the current language
  */
 export function useChangeLanguage(): (language: string) => Promise<void> {
-  const { i18n } = useI18nTranslation(NAMESPACES);
+  const { i18n } = useI18nTranslation();
 
   const changeLanguage = async (language: string): Promise<void> => {
     await i18n.changeLanguage(language);
