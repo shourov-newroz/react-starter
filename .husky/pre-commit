@@ -6,20 +6,20 @@ set -e
 
 echo "Running pre-commit checks..."
 
-# 1. Run TypeScript type checking
+# 1. Run TypeScript type checking (using -b to match build)
 echo "Checking TypeScript types..."
-npx tsc --noEmit
+npx tsc -b
 
 # 2. Run linting (fail on errors only, not warnings)
 echo "Running linter..."
-npx eslint . --ext ts,tsx
+npm run lint
 
 # 3. Check formatting
 echo "Checking code formatting..."
-npx prettier --check "src/**/*.{ts,tsx,json,css,md}"
+npm run format:check
 
 # 4. Run tests
 echo "Running tests..."
-npx vitest run
+npm run test:run
 
 echo "All pre-commit checks passed!"
