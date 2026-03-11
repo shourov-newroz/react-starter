@@ -4,10 +4,11 @@ import type { SWRConfiguration } from 'swr';
 import { apiClient } from '@/services/api-client';
 import type { ApiError } from '@/types/api.types';
 
+import { logger } from './logger';
 import serverErrorHandler from './serverErrorHandler';
 
 export const swrConfig: SWRConfiguration = {
-  fetcher: (url: string) => apiClient.get(url).then((res) => res.data.data),
+  fetcher: (url: string) => apiClient.sendGetRequest(url),
   revalidateOnFocus: false,
   revalidateOnReconnect: true,
   revalidateOnMount: true,
@@ -19,8 +20,8 @@ export const swrConfig: SWRConfiguration = {
   onError: (error: AxiosError<ApiError>) => {
     serverErrorHandler(error);
   },
-  onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-    console.log('🚀 ~ config, key:', config, key);
+  onErrorRetry: (error, key, _config, revalidate, { retryCount }) => {
+    logger.debug('SWR error retry', { key, retryCount });
     // Never retry on 404.
     if (error.status === 404) return;
 

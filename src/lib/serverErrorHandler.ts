@@ -11,10 +11,9 @@ const serverErrorHandler = (error: AxiosError<ApiError>): void => {
     logger.error(error.response.data.message);
 
     const { data } = error.response;
-    console.log('🚀 ~ serverErrorHandler => error.response data:', data);
+    logger.debug('Server error response data', { data });
   } else {
-    // Handle cases where the response is missing
-    console.error('Error without response:', error);
+    logger.error('Error without response', error as Error);
     // Optionally show a generic error message
     // warningToast('Something went wrong. Please try again.');
   }

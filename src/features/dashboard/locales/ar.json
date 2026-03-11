@@ -1,4 +1,8 @@
 {
   "Welcome to your dashboard! :)": "مرحباً بك في لوحتك! :)",
-  "Copyright © {{year}} Travluence. All rights reserved.": "حقوق النشر © {{year}} ترافيلانس. جميع الحقوق محفوظة."
+  "Copyright © {{year}} Travluence. All rights reserved.": "حقوق النشر © {{year}} ترافيلانس. جميع الحقوق محفوظة.",
+  "Profile": "الملف الشخصي",
+  "Bio": "السيرة الذاتية",
+  "Location": "الموقع",
+  "Joined": "تاريخ الانضمام"
 }

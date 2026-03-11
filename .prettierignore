@@ -29,6 +29,9 @@ pnpm-lock.yaml
 .DS_Store
 Thumbs.db
 
+# AI Rules
+.kilocode/
+
 # Misc
 *.log
 *.tgz
