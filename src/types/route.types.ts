@@ -7,6 +7,8 @@ type BaseRoute = {
   name?: string;
   children?: RouteConfig[];
   auth: AuthRequirement;
+  /** Optional fallback component for Suspense loading state */
+  fallback?: React.ComponentType;
 };
 
 type LayoutRoute = BaseRoute & {

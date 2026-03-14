@@ -7,7 +7,14 @@
  * Namespace definitions for translations
  * Each namespace represents a separate translation file
  */
-export const NAMESPACES = ['auth', 'common', 'dashboard', 'navigation', 'language'] as const;
+export const NAMESPACES = [
+  'auth',
+  'common',
+  'dashboard',
+  'navigation',
+  'language',
+  'verification',
+] as const;
 export type Namespace = (typeof NAMESPACES)[number];
 
 /**
@@ -56,6 +63,12 @@ export const NAMESPACE_CONFIG: Record<Namespace, NamespaceConfig> = {
     feature: 'core',
     path: '/src/lib/i18n/locales',
     isShared: true,
+  },
+  verification: {
+    name: 'verification',
+    feature: 'verification',
+    path: '/src/features/verification/locales',
+    isShared: false,
   },
 };
 
