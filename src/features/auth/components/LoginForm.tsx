@@ -1,24 +1,12 @@
 import { useState, type ReactElement } from 'react';
 
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 import { useAuth } from '../hooks/useAuth';
 import { useAuthT } from '../hooks/useTranslation';
 
-/**
- * Login form component
- * Demonstrates integration with auth hook and shadcn/ui components
- */
 export function LoginForm(): ReactElement {
   const { login, isLoading, error } = useAuth();
   const [email, setEmail] = useState('');
@@ -31,50 +19,58 @@ export function LoginForm(): ReactElement {
   };
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle>{t('Login')}</CardTitle>
-        <CardDescription>{t('Enter your credentials to access your account')}</CardDescription>
-      </CardHeader>
-      <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">{t('Email')}</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder={t('Email placeholder')}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={isLoading}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">{t('Password')}</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder={t('Password placeholder')}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={isLoading}
-            />
-          </div>
-          {error && (
-            <p className="text-sm text-destructive" role="alert">
-              {error}
-            </p>
-          )}
-        </CardContent>
-        <CardFooter>
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? t('Signing in...') : t('Sign In')}
-          </Button>
-        </CardFooter>
+    <>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="space-y-2">
+          <Label htmlFor="email" className="text-gray-700 font-medium">
+            {t('Email')}
+          </Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder={t('Email placeholder')}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={isLoading}
+            className="focus:ring-2 focus:ring-indigo-500"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="password" className="text-gray-700 font-medium">
+            {t('Password')}
+          </Label>
+          <Input
+            id="password"
+            type="password"
+            placeholder={t('Password placeholder')}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            disabled={isLoading}
+            className="focus:ring-2 focus:ring-indigo-500"
+          />
+        </div>
+        {error && (
+          <p className="text-sm text-red-600 font-medium" role="alert">
+            {error}
+          </p>
+        )}
+        <Button
+          type="submit"
+          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-lg transition-colors"
+          disabled={isLoading}
+        >
+          {isLoading ? t('Signing in...') : t('Sign In')}
+        </Button>
       </form>
-    </Card>
+      <p className="mt-6 text-center text-sm text-gray-500">
+        {t("Don't have an account?")}{' '}
+        <a href="/register" className="text-indigo-600 hover:underline">
+          {t('Sign up')}
+        </a>
+      </p>
+    </>
   );
 }
 

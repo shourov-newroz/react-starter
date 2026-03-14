@@ -1,18 +1,12 @@
 import React from 'react';
 
-import { useCommonT } from '@/lib/i18n';
+import { GenericPageSkeleton } from '@/components/ui/generic-page-skeleton';
 
+/**
+ * Generic loading fallback component for Suspense boundaries
+ * Uses GenericPageSkeleton for consistent skeleton loading experience
+ * @deprecated Use route-specific skeleton fallback instead (via route.fallback)
+ */
 export const LoadingFallback: React.FC = () => {
-  const t = useCommonT();
-  return (
-    <div
-      className="flex justify-center items-center h-screen"
-      role="status"
-      aria-live="polite"
-      aria-label="Loading content"
-    >
-      <div className="w-8 h-8 rounded-full border-t-2 border-b-2 animate-spin border-primary"></div>
-      <span className="sr-only">{t('Loading')}</span>
-    </div>
-  );
+  return <GenericPageSkeleton />;
 };

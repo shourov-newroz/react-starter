@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { ErrorBoundary } from '@/components/ErrorBoundary';
-import { LoadingFallback } from '@/components/LoadingFallback';
+import { GenericPageSkeleton } from '@/components/ui/generic-page-skeleton';
 import { routes } from '@/config/routes';
 import { useAuth } from '@/features/auth';
 import type { RouteConfig } from '@/types/route.types';
@@ -23,9 +23,12 @@ const AppRoutes: React.FC = () => {
   const renderRouteElement = (route: RouteConfig): React.ReactNode => {
     let element;
 
+    // Use route-specific fallback or GenericPageSkeleton for Suspense
+    const fallback = route.fallback ? React.createElement(route.fallback) : <GenericPageSkeleton />;
+
     if (route.auth === 'authenticated') {
       if (isLoading) {
-        return <LoadingFallback />;
+        return fallback;
       }
 
       // only authenticated routes
@@ -45,7 +48,7 @@ const AppRoutes: React.FC = () => {
     }
 
     return (
-      <Suspense fallback={<LoadingFallback />}>
+      <Suspense fallback={fallback}>
         <ErrorBoundary>{element}</ErrorBoundary>
       </Suspense>
     );

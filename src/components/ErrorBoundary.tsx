@@ -1,5 +1,6 @@
 import { Component, type ReactNode } from 'react';
 
+import { Heading, Text } from '@/components/ui/typography';
 import { useCommonT } from '@/lib/i18n/useAppTranslation';
 import { logger } from '@/lib/logger';
 
@@ -46,8 +47,10 @@ function ErrorBoundaryFallback({ errorMessage }: { errorMessage?: string }): Rea
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="text-center">
-        <h1 className="text-2xl font-bold">{t('Something went wrong')}</h1>
-        <p className="mt-2 text-muted-foreground">{errorMessage}</p>
+        <Heading size="h2">{t('Something went wrong')}</Heading>
+        <Text variant="muted" className="mt-2">
+          {errorMessage}
+        </Text>
         <button
           onClick={() => window.location.reload()}
           className="mt-4 rounded bg-primary px-4 py-2 text-white"

@@ -1,10 +1,13 @@
 import React from 'react';
 import useSWR from 'swr';
 
+import { Heading, Text } from '@/components/ui/typography';
 import { useCommonT } from '@/lib/i18n/useAppTranslation';
 
 import { DASHBOARD_API_ENDPOINTS } from '../config/dashboard.config';
 import { useDashboardT } from '../hooks/useTranslation';
+
+import ProfilePageSkeleton from './ProfilePageSkeleton';
 
 /**
  * User profile type definition
@@ -36,24 +39,15 @@ function ProfilePage(): React.ReactElement {
   );
 
   if (isLoading) {
-    return (
-      <div className="p-8">
-        <h1 className="text-3xl font-bold tracking-tight">{t('Profile')}</h1>
-        <div className="mt-8 animate-pulse">
-          <div className="h-32 w-32 rounded-full bg-muted mb-4"></div>
-          <div className="h-6 w-48 bg-muted rounded mb-2"></div>
-          <div className="h-4 w-64 bg-muted rounded"></div>
-        </div>
-      </div>
-    );
+    return <ProfilePageSkeleton />;
   }
 
   if (error) {
     return (
       <div className="p-8">
-        <h1 className="text-3xl font-bold tracking-tight">{t('Profile')}</h1>
+        <Heading size="h1">{t('Profile')}</Heading>
         <div className="mt-4 p-4 border border-destructive rounded-md" role="alert">
-          <p className="text-destructive">{tCommon('Something went wrong')}</p>
+          <Text variant="destructive">{tCommon('Something went wrong')}</Text>
           <button
             type="button"
             className="mt-2 text-sm text-primary hover:underline"
@@ -72,8 +66,10 @@ function ProfilePage(): React.ReactElement {
 
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold tracking-tight">{t('Profile')}</h1>
-      <p className="mt-4 text-muted-foreground">{tCommon('This is the user profile page.')}</p>
+      <Heading size="h1">{t('Profile')}</Heading>
+      <Text variant="muted" className="mt-4">
+        {tCommon('This is the user profile page.')}
+      </Text>
 
       {user && (
         <div className="mt-8 flex flex-col items-start gap-6">
@@ -84,8 +80,10 @@ function ProfilePage(): React.ReactElement {
               className="h-24 w-24 rounded-full object-cover border-2 border-primary"
             />
             <div>
-              <h2 className="text-xl font-semibold">{user.name}</h2>
-              <p className="text-muted-foreground">{user.email}</p>
+              <Heading size="h3" weight="semibold">
+                {user.name}
+              </Heading>
+              <Text variant="muted">{user.email}</Text>
             </div>
           </div>
 
@@ -93,20 +91,18 @@ function ProfilePage(): React.ReactElement {
             {user.bio && (
               <div>
                 <span className="font-medium">{t('Bio')}</span>
-                <p className="text-muted-foreground">{user.bio}</p>
+                <Text variant="muted">{user.bio}</Text>
               </div>
             )}
             {user.location && (
               <div>
                 <span className="font-medium">{t('Location')}</span>
-                <p className="text-muted-foreground">{user.location}</p>
+                <Text variant="muted">{user.location}</Text>
               </div>
             )}
             <div>
               <span className="font-medium">{t('Joined')}</span>
-              <p className="text-muted-foreground">
-                {new Date(user.joinedAt).toLocaleDateString()}
-              </p>
+              <Text variant="muted">{new Date(user.joinedAt).toLocaleDateString()}</Text>
             </div>
           </div>
         </div>

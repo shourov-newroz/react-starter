@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { Heading, Text } from '@/components/ui/typography';
 import { AUTH_LINKS, useAuthT } from '@/features/auth';
 import { useCommonT } from '@/lib/i18n';
 
@@ -13,8 +14,10 @@ export function DashboardPage(): React.ReactElement {
 
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold tracking-tight">{t('Welcome to your dashboard! :)')}</h1>
-      <p className="mt-4 text-muted-foreground">{tCommon('Loading')}</p>
+      <Heading size="h1">{t('Welcome to your dashboard! :)')}</Heading>
+      <Text variant="muted" className="mt-4">
+        {tCommon('Loading')}
+      </Text>
       <div className="mt-8 flex gap-4">
         <Link
           to={AUTH_LINKS.LOGIN}

@@ -7,6 +7,7 @@ import { ChevronDown, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation as useI18nTranslation } from 'react-i18next';
 
+import { Text } from '@/components/ui/typography';
 import { useChangeLanguage } from '@/lib/i18n';
 import {
   SUPPORTED_LANGUAGES,
@@ -112,7 +113,9 @@ export function LanguageSwitcher({ className, onLanguageChange }: LanguageSwitch
                 )}
               >
                 <span className="flex-1">{language.nativeName}</span>
-                <span className="ms-2 text-muted-foreground">{language.name}</span>
+                <Text variant="muted" size="sm" className="ms-2">
+                  {language.name}
+                </Text>
               </li>
             ))}
           </ul>

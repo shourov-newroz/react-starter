@@ -39,6 +39,7 @@ coverage
 
 *docs/backlogs
 *docs/requirements
+.kilocode/rules
 
 # OS files
 Thumbs.db
