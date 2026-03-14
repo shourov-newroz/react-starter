@@ -23,7 +23,9 @@
   "paragraphNormal": "Normal Leading",
   "paragraphRelaxed": "Relaxed Leading",
   "inputComponent": "Input Component",
+  "inputDefault": "Default Input",
   "labelComponent": "Label Component",
+  "labelDefault": "Default Label",
   "actualComponent": "Actual Component",
   "skeletonComponent": "Skeleton Component",
   "sideBySideMode": "Side by Side",
@@ -36,5 +38,6 @@
   "buttonLargeText": "Large Button",
   "headingText1": "Heading 1",
   "headingText2": "Heading 2",
-  "headingText3": "Heading 3"
+  "headingText3": "Heading 3",
+  "labelText": "Label Text"
 }

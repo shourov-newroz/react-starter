@@ -1,9 +1,7 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// ButtonSkeleton
+﻿// ButtonSkeleton
 //
 // Mirrors every size variant from `buttonVariants` 1-to-1.
 // Only layout-affecting props are accepted (size, width) — no data/behaviour.
-// ─────────────────────────────────────────────────────────────────────────────
 
 import type { VariantProps } from 'class-variance-authority';
 
@@ -21,40 +19,40 @@ import { Skeleton } from './skeleton';
  * Text variants are fluid by default; pass `width` to pin them.
  */
 const SKELETON_SIZE_MAP = {
-  // ── text sizes ──────────────────────────────────────────────────
-  //   real:  h-8  px-2.5 rounded-lg  (defaultVariants)
+  // text sizes
+  // real:  h-7 px-2 rounded-md (defaultVariants)
   default: {
-    className: 'h-8 w-24 rounded-lg',
+    className: 'h-7 w-24 rounded-md',
   },
-  //   real:  h-6  px-2   rounded-[min(var(--radius-md),10px)]
+  // real:  h-5 px-2 rounded-sm
   xs: {
-    className: 'h-6 w-16 rounded-[min(var(--radius-md),10px)]',
+    className: 'h-5 w-16 rounded-sm',
   },
-  //   real:  h-7  px-2.5 rounded-[min(var(--radius-md),12px)]
+  // real:  h-6 px-2 rounded-md
   sm: {
-    className: 'h-7 w-20 rounded-[min(var(--radius-md),12px)]',
+    className: 'h-6 w-20 rounded-md',
   },
-  //   real:  h-9  px-2.5 rounded-lg
+  // real:  h-8 px-2.5 rounded-md
   lg: {
-    className: 'h-9 w-28 rounded-lg',
+    className: 'h-8 w-28 rounded-md',
   },
 
-  // ── icon sizes (square, no inner text glyph) ────────────────────
-  //   real:  size-6  rounded-[min(var(--radius-md),10px)]
+  // icon sizes (square, no inner text glyph)
+  // real:  size-5 rounded-sm
   'icon-xs': {
-    className: 'size-6 rounded-[min(var(--radius-md),10px)]',
+    className: 'size-5 rounded-sm',
   },
-  //   real:  size-7  rounded-[min(var(--radius-md),12px)]
+  // real:  size-6 rounded-md
   'icon-sm': {
-    className: 'size-7 rounded-[min(var(--radius-md),12px)]',
+    className: 'size-6 rounded-md',
   },
-  //   real:  size-8  rounded-lg
+  // real:  size-7 rounded-md
   icon: {
-    className: 'size-8 rounded-lg',
+    className: 'size-7 rounded-md',
   },
-  //   real:  size-9  rounded-lg
+  // real:  size-8 rounded-md
   'icon-lg': {
-    className: 'size-9 rounded-lg',
+    className: 'size-8 rounded-md',
   },
 } as const satisfies Record<
   NonNullable<VariantProps<typeof buttonVariants>['size']>,
@@ -115,9 +113,7 @@ function ButtonSkeleton({ size = 'default', width, className }: ButtonSkeletonPr
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
 // Exports
-// ─────────────────────────────────────────────────────────────────────────────
 
 export { ButtonSkeleton };
 export type { ButtonSkeletonProps };
