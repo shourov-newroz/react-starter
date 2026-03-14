@@ -8,6 +8,7 @@ Thank you for your interest in contributing to this project! This guide will hel
 2. [Getting Started](#getting-started)
 3. [Development Workflow](#development-workflow)
 4. [Coding Standards](#coding-standards)
+   - [Skeleton Loading Developer Rules](#skeleton-loading-developer-rules)
 5. [Commit Guidelines](#commit-guidelines)
 6. [Pull Request Process](#pull-request-process)
 7. [Testing Requirements](#testing-requirements)
@@ -318,9 +319,11 @@ When adding support for a new language:
 
 - **Be consistent**: Use the same key across all language files
 - **Use interpolation**: For dynamic values, use `{{variable}}` syntax
+
   ```json
   { "Welcome, {{name}}!": "Welcome, {{name}}!" }
   ```
+
 - **Handle plurals**: Use the `count` option for plural forms
 - **Keep it simple**: Avoid nested JSON structures - use flat keys
 - **Test RTL**: If adding RTL language support, test the UI layout
@@ -366,6 +369,192 @@ import { Button } from '@/components/ui/button';
 
 // 4. Relative imports
 import { authService } from '../services/auth.service';
+```
+
+### API Endpoint Configuration
+
+When adding API endpoints to a feature, follow these guidelines:
+
+1. **Create a config file**: Place endpoint definitions in `src/features/[feature]/config/[feature].config.ts`
+
+   ```typescript
+   // src/features/auth/config/auth.config.ts
+   export const AUTH_API_ENDPOINTS = {
+     LOGIN: '/auth/login',
+     // Dynamic endpoints
+     GET_USER: (id: string) => `/auth/users/${id}`,
+     GET_WITH_QUERY: (query: string) => `/auth/search?${query}`,
+   } as const;
+   ```
+
+2. **Use endpoints in services**: Import and use the centralized endpoints
+
+   ```typescript
+
+   ```
+
+import { DASHBOARD_API_ENDPOINTS } from '../config/dashboard.config';
+
+const { data, error, isLoading, mutate } = useSWR<ProfileResponse>(
+DASHBOARD_API_ENDPOINTS.USER_PROFILE
+);
+
+````
+
+3. **Never hardcode URLs**: Always use the centralized configuration
+
+```typescript
+// ❌ Wrong - hardcoded URL
+const { data } = useSWR('/api/users/me');
+
+// ✅ Correct - use centralized endpoint
+const { data } = useSWR(DASHBOARD_API_ENDPOINTS.USER_PROFILE);
+````
+
+1. **Export from feature barrel**: Add config exports to `src/features/[feature]/index.ts`
+
+---
+
+## Skeleton Loading Developer Rules
+
+This project uses a comprehensive skeleton loading system for async UI states. Follow these rules when adding new features:
+
+### Rule 1: All Async UI Must Provide Named Skeleton Loading State
+
+- ❌ DO NOT use spinners for async data loading
+- ❌ DO NOT use raw `animate-pulse` divs
+- ✅ DO use named skeleton components (e.g., `<ProfilePageSkeleton />`)
+
+```typescript
+// ✅ CORRECT
+if (isLoading) {
+  return <ProfilePageSkeleton />;
+}
+
+// ❌ WRONG - Spinner for async data
+if (isLoading) {
+  return <LoadingSpinner />;
+}
+
+// ❌ WRONG - Raw animate-pulse
+if (isLoading) {
+  return <div className="animate-pulse">...</div>;
+}
+```
+
+### Rule 2: All Pages Must Have a `*PageSkeleton` Companion
+
+Every page component in `src/features/*/pages/` must have a `*Skeleton` companion in the same directory.
+
+```
+src/features/dashboard/pages/
+├── DashboardPage.tsx
+├── DashboardPageSkeleton.tsx  # Required!
+├── ProfilePage.tsx
+└── ProfilePageSkeleton.tsx    # Required!
+```
+
+### Rule 3: All Layouts Must Have a `*LayoutSkeleton` Companion
+
+Every layout in `src/features/*/layouts/` must have a `*LayoutSkeleton` companion.
+
+```
+src/features/dashboard/layouts/
+├── DashboardLayout.tsx
+└── DashboardLayoutSkeleton.tsx  # Required!
+```
+
+### Rule 4: Every UI Component Must Have a `*Skeleton` Variant
+
+Every component in `src/components/ui/` must have a `*Skeleton` companion in the same directory.
+
+```
+src/components/ui/
+├── button.tsx
+├── button-skeleton.tsx    # Required!
+├── input.tsx
+├── input-skeleton.tsx     # Required!
+├── card.tsx
+└── card-skeleton.tsx     # Required!
+```
+
+### Rule 5: Skeleton Variants Must Support Size Props Only
+
+Skeleton props must use `size` (matching the component's size variants); color variants are forbidden.
+
+```typescript
+// ✅ CORRECT - Size-based skeleton
+interface ButtonSkeletonProps {
+  size?: 'default' | 'sm' | 'lg' | 'icon';
+}
+
+// ❌ WRONG - Color-based skeleton
+interface ButtonSkeletonProps {
+  variant?: 'primary' | 'secondary';
+}
+```
+
+### Rule 6: Skeleton Root Containers Must Use `overflow-hidden`
+
+Skeleton root elements must use `overflow-hidden`; scrolling is forbidden.
+
+```typescript
+// ✅ CORRECT
+return (
+  <div className="p-8 overflow-hidden">
+    {/* skeleton content */}
+  </div>
+);
+
+// ❌ WRONG
+return (
+  <div className="p-8 overflow-y-auto">
+    {/* skeleton content */}
+  </div>
+);
+```
+
+### Rule 7: Always Compose the `Skeleton` Primitive
+
+Never use raw `animate-pulse` - always compose the `Skeleton` primitive.
+
+```typescript
+// ✅ CORRECT
+import { Skeleton } from '@/components/ui/skeleton';
+
+export function ButtonSkeleton({ size = 'default' }): React.ReactElement {
+  return <Skeleton className={sizeClasses[size]} />;
+}
+
+// ❌ WRONG
+export function ButtonSkeleton(): React.ReactElement {
+  return <div className="animate-pulse bg-muted rounded-md h-10"></div>;
+}
+```
+
+### Rule 8: Define Route Fallback for Suspense
+
+Every route must define a `fallback` property using the skeleton component.
+
+```typescript
+export const DASHBOARD_ROUTES: RouteConfig[] = [
+  {
+    element: DashboardLayout,
+    isLayout: true,
+    path: '/',
+    auth: 'authenticated',
+    fallback: DashboardLayoutSkeleton, // Required!
+    children: [
+      {
+        index: true,
+        element: React.lazy(() => import('../pages/DashboardPage')),
+        name: 'Dashboard',
+        auth: 'authenticated',
+        fallback: DashboardPageSkeleton, // Required!
+      },
+    ],
+  },
+];
 ```
 
 ---

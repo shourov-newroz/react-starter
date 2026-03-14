@@ -10,8 +10,9 @@ This document provides a detailed overview of the architecture and design decisi
 4. [Data Layer](#data-layer)
 5. [Component Architecture](#component-architecture)
 6. [Error Handling](#error-handling)
-7. [Performance Considerations](#performance-considerations)
-8. [Security](#security)
+7. [Skeleton Loading Architecture](#skeleton-loading-architecture)
+8. [Performance Considerations](#performance-considerations)
+9. [Security](#security)
 
 ---
 
@@ -65,6 +66,8 @@ src/features/
     ├── components/        # Feature-specific components
     │   ├── LoginForm.tsx
     │   └── index.ts
+    ├── config/            # Feature API endpoint and other configuration
+    │   └── auth.config.ts
     ├── hooks/             # Feature-specific hooks
     │   ├── use-auth.ts
     │   └── index.ts
@@ -167,6 +170,66 @@ SWR is configured globally with:
 - Global error handler
 
 ---
+
+## API Endpoint Configuration
+
+### Centralized API Endpoints
+
+All API endpoints MUST be centralized in feature configuration files. This ensures:
+
+- **Single source of truth** for all API URLs
+- **Easy maintenance** - change endpoint in one place
+- **Consistency** across all features
+- **Type safety** with TypeScript
+
+### Creating API Endpoint Configuration
+
+Create a `{feature}.config.ts` file in each feature's config directory:
+
+```typescript
+// src/features/auth/config/auth.config.ts
+
+/**
+ * Auth Feature API Endpoints Configuration
+ * Centralizes all API endpoint URLs for the auth feature
+ */
+
+export const AUTH_API_ENDPOINTS = {
+  LOGIN: '/auth/login',
+  // Dynamic endpoints
+  GET_USER: (id: string) => `/auth/users/${id}`,
+  GET_WITH_QUERY: (query: string) => `/auth/search?${query}`,
+} as const;
+```
+
+### Using Endpoint Configuration in Services
+
+Import and use the centralized endpoints in your service layer:
+
+```typescript
+import { DASHBOARD_API_ENDPOINTS } from '../config/dashboard.config';
+
+const { data, error, isLoading, mutate } = useSWR<ProfileResponse>(
+  DASHBOARD_API_ENDPOINTS.USER_PROFILE
+);
+```
+
+### ❌ Never Hardcode URLs
+
+```typescript
+// ❌ FORBIDDEN — Hardcoded URL
+const { data } = useSWR('/api/users/me');
+
+// ✅ CORRECT — Use centralized configuration
+const { data } = useSWR(DASHBOARD_API_ENDPOINTS.USER_PROFILE);
+```
+
+### Existing API Configurations
+
+| Feature   | Config File                                                                                              | Endpoints                                        |
+| --------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| Auth      | [`src/features/auth/config/auth.config.ts`](src/features/auth/config/auth.config.ts)                     | LOGIN, REGISTER, LOGOUT, GET_CURRENT_USER, etc.  |
+| Dashboard | [`src/features/dashboard/config/dashboard.config.ts`](src/features/dashboard/config/dashboard.config.ts) | USER_PROFILE, DASHBOARD_STATS, RECENT_ACTIVITIES |
 
 ## Component Architecture
 
@@ -352,6 +415,82 @@ This supports complex nested routing, automatic code splitting, and consistent e
                │  Feedback   │
                └─────────────┘
 ```
+
+---
+
+## Skeleton Loading Architecture
+
+This project uses a comprehensive skeleton loading system for async UI states, ensuring consistent, performant loading experiences without layout shifts.
+
+### Global Skeleton Primitive
+
+- Located at `src/components/ui/skeleton.tsx`
+- Provides the base `Skeleton` component using `animate-pulse`
+- All skeleton variants MUST compose this primitive
+
+### Atomic Skeleton Variants
+
+Located in `src/components/ui/` alongside the real components:
+
+- `button-skeleton.tsx` - matches `button.tsx` sizes
+- `input-skeleton.tsx` - matches `input.tsx` dimensions
+- `card-skeleton.tsx` - includes header, content, footer variants
+- `label-skeleton.tsx` - matches label dimensions
+
+Each skeleton follows size-only props pattern (no color variants).
+
+### Layout Skeletons
+
+- Located in `src/features/{feature}/layouts/`
+- Naming: `{Feature}LayoutSkeleton.tsx`
+- Mirrors the real layout structure exactly
+- Root element MUST use `overflow-hidden` (no scrolling)
+
+### Page Skeletons
+
+- Located in `src/features/{feature}/pages/`
+- Naming: `{Page}Skeleton.tsx`
+- Each page component MUST have a skeleton companion
+- Root element MUST use `overflow-hidden` (no scrolling)
+
+### Route Fallback Integration
+
+The `fallback` field in `RouteConfig` accepts a skeleton component:
+
+```typescript
+export const DASHBOARD_ROUTES: RouteConfig[] = [
+  {
+    element: DashboardLayout,
+    isLayout: true,
+    path: '/',
+    auth: 'authenticated',
+    fallback: DashboardLayoutSkeleton,
+    children: [
+      {
+        index: true,
+        element: React.lazy(() => import('../pages/DashboardPage')),
+        name: 'Dashboard',
+        auth: 'authenticated',
+        fallback: DashboardPageSkeleton,
+      },
+    ],
+  },
+];
+```
+
+`App.tsx` uses route-specific fallback or `GenericPageSkeleton` as default for Suspense boundaries.
+
+### Generic Page Skeleton
+
+For routes without a specific skeleton, use `GenericPageSkeleton` from `@/components/ui/generic-page-skeleton`.
+
+### Skeleton Best Practices
+
+1. All async UI must use named skeleton components (not spinners or raw animate-pulse)
+2. Every page must have a `*Skeleton` companion
+3. Every layout must have a `*LayoutSkeleton` companion
+4. Skeleton root containers must use `overflow-hidden`
+5. Always compose the `Skeleton` primitive — never use raw `animate-pulse`
 
 ---
 
@@ -541,25 +680,26 @@ This project enforces strict code quality standards through pre-commit checks. A
    npx tsc --noEmit
 ````
 
-2. **ESLint**: Enforces code quality rules and best practices
+1. **ESLint**: Enforces code quality rules and best practices
 
    ```bash
    npx eslint . --ext ts,tsx
    ```
 
-3. **Prettier**: Ensures consistent code formatting
+2. **Prettier**: Ensures consistent code formatting
 
    ```bash
    npx prettier --check "src/**/*.{ts,tsx,json,css,md}"
    ```
 
-4. **Vitest**: Runs the full test suite
+3. **Vitest**: Runs the full test suite
 
    ```bash
    npx vitest run
    ```
 
-5. **commitlint**: Enforces Conventional Commit message format
+4. **commitlint**: Enforces Conventional Commit message format
+
    ```bash
    npx commitlint --edit $1
    ```

@@ -165,7 +165,7 @@ export const SUPPORTED_LANGUAGES: LanguageConfig[] = [
 ];
 ```
 
-2. Add direction mapping in `LANGUAGE_DIRECTION`:
+1. Add direction mapping in `LANGUAGE_DIRECTION`:
 
 ```typescript
 export const LANGUAGE_DIRECTION: Record<LanguageCode, Direction> = {
@@ -176,7 +176,7 @@ export const LANGUAGE_DIRECTION: Record<LanguageCode, Direction> = {
 };
 ```
 
-3. Add language name in `LANGUAGE_NAMES`:
+1. Add language name in `LANGUAGE_NAMES`:
 
 ```typescript
 export const LANGUAGE_NAMES: Record<LanguageCode, string> = {
@@ -187,7 +187,7 @@ export const LANGUAGE_NAMES: Record<LanguageCode, string> = {
 };
 ```
 
-4. Create translation files for each namespace:
+1. Create translation files for each namespace:
    - Feature namespaces: `src/features/{feature}/locales/{lang}.json`
    - Shared namespaces: `src/lib/i18n/locales/{lang}/{namespace}.json`
 
@@ -230,7 +230,7 @@ export const NAMESPACES = [
 ] as const;
 ```
 
-2. Configure the namespace path in `NAMESPACE_CONFIG`:
+1. Configure the namespace path in `NAMESPACE_CONFIG`:
 
 ```typescript
 export const NAMESPACE_CONFIG: Record<Namespace, NamespaceConfig> = {
@@ -244,7 +244,7 @@ export const NAMESPACE_CONFIG: Record<Namespace, NamespaceConfig> = {
 };
 ```
 
-3. Create translation files at the configured path.
+1. Create translation files at the configured path.
 
 ### Usage Examples
 
@@ -417,44 +417,46 @@ src/
 ├── features/              # Feature modules
 │   ├── auth/             # Auth feature
 │   │   ├── components/   # Feature components
+│   │   ├── config/       # Feature API endpoint and other configuration
 │   │   ├── hooks/        # Feature hooks
-│   │   ├── locales/     # Feature translations
+│   │   ├── locales/      # Feature translations
 │   │   ├── pages/        # Feature pages
-│   │   ├── routes/      # Feature routes
-│   │   ├── services/    # API services
-│   │   ├── store/       # Zustand store
+│   │   ├── routes/       # Feature routes
+│   │   ├── services/     # API services
+│   │   ├── store/        # Zustand store
 │   │   └── auth.types.ts # Feature types
-│   ├── dashboard/       # Dashboard feature
+│   ├── dashboard/        # Dashboard feature
+│   │   ├── config/       # Feature API endpoint and other configuration
 │   │   ├── hooks/
 │   │   ├── layouts/
-│   │   ├── locales/     # Feature translations
+│   │   ├── locales/      # Feature translations
 │   │   ├── pages/
 │   │   └── routes/
-│   └── demo/            # Demo feature
-├── hooks/                 # Shared hooks
-├── lib/                   # Utilities
+│   └── demo/             # Demo feature
+├── hooks/                # Shared hooks
+├── lib/                  # Utilities
 │   ├── error.ts          # Error handling
 │   ├── i18n/             # Internationalization (i18n)
-│   │   ├── config.ts    # i18next configuration
-│   │   ├── locales.ts   # Language configuration
+│   │   ├── config.ts     # i18next configuration
+│   │   ├── locales.ts    # Language configuration
 │   │   ├── namespace-config.ts  # Namespace definitions
 │   │   ├── useAppTranslation.ts # Translation hooks
-│   │   └── locales/     # Shared translations
+│   │   └── locales/      # Shared translations
 │   ├── logger.ts         # Logging utility
 │   ├── serverErrorHandler.ts # Server error handler
 │   ├── swr-config.ts     # SWR configuration
 │   └── utils.ts          # Helper functions
-├── services/              # API services
+├── services/             # API services
 │   ├── api-client.ts     # API client wrapper
 │   └── axios.ts          # Axios instance
-├── stores/                # Global stores
-├── styles/                # Global styles
+├── stores/               # Global stores
+├── styles/               # Global styles
 │   └── index.css         # Tailwind imports
-├── tests/                 # Test setup
+├── tests/                # Test setup
 │   ├── mocks/            # MSW handlers
 │   ├── setup.ts          # Test setup
 │   └── test-utils.tsx    # Test utilities
-└── types/                 # TypeScript types
+└── types/                # TypeScript types
     ├── api.types.ts      # API types
     ├── env.d.ts          # Environment types
     ├── error.types.ts    # Error types
