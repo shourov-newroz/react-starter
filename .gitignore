@@ -37,9 +37,9 @@ coverage
 *.sln
 *.sw?
 
-*docs/backlogs
-*docs/requirements
-.kilocode/rules
+# *docs/backlogs
+# *docs/requirements
+# .kilocode/rules
 
 # OS files
 Thumbs.db

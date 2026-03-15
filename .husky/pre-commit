@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
 
 # Exit on error
 set -e
@@ -8,7 +7,7 @@ echo "Running pre-commit checks..."
 
 # 1. Run TypeScript type checking (using -b to match build)
 echo "Checking TypeScript types..."
-npx tsc -b
+tsc -b
 
 # 2. Run linting (fail on errors only, not warnings)
 echo "Running linter..."
